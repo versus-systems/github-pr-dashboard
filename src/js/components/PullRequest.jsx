@@ -44,15 +44,14 @@ export default class PullRequest extends React.Component {
             <img src="images/git-pull-request.svg" alt="Pull request" />
             &nbsp;
             <a target="_blank" href={pr.url}>{pr.title}</a>
+            <Status
+              status={pr.status}
+            />
           </div>
           <div>
             <a target="_blank" href={pr.repoUrl}>
               <img src="images/repo.svg" alt="Repository" /> {pr.repo}
             </a>
-            <span className="pull-request-number">#{pr.number}</span>
-            <Status
-              status={pr.status}
-            />
             <Comments
               comments={pr.comments}
               positiveCommentCount={pr.positiveComments}
@@ -60,15 +59,12 @@ export default class PullRequest extends React.Component {
               reactions={pr.reactions}
             />
           </div>
-          <div className="pull-request-created" title={this.formatTime('Created', pr.created)}>
-            Opened by {pr.user.username} {this.formatRelativeTime(pr.created)}
-          </div>
         </div>
         <div
           className="pull-request-last-updated"
-          title={this.formatTime('Last updated', pr.updated)}
+          title={this.formatTime('Last updated', pr.created)}
         >
-          {this.formatRelativeTime(pr.updated)}
+          {this.formatRelativeTime(pr.created)}
         </div>
       </div>
     );
