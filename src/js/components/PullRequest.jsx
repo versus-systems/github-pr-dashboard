@@ -5,7 +5,6 @@ import '../../images/repo.svg';
 import '../../images/git-pull-request.svg';
 
 import UserPhoto from './UserPhoto';
-import { Comments } from './Comments';
 import { Status } from './Status';
 
 const CLASS_BASE = 'pull-request';
@@ -38,6 +37,9 @@ export default class PullRequest extends React.Component {
 
     return (
       <div className={className}>
+        <div className="accept-count">
+          {pr.positiveComments}
+        </div>
         <UserPhoto size={50} user={pr.user} />
         <div className="pull-request-info">
           <div className="pull-request-title">
@@ -52,12 +54,6 @@ export default class PullRequest extends React.Component {
             <a target="_blank" href={pr.repoUrl}>
               <img src="images/repo.svg" alt="Repository" /> {pr.repo}
             </a>
-            <Comments
-              comments={pr.comments}
-              positiveCommentCount={pr.positiveComments}
-              negativeCommentCount={pr.negativeComments}
-              reactions={pr.reactions}
-            />
           </div>
         </div>
         <div

@@ -1,4 +1,4 @@
-$link-color: #02779E;
+$link-color: black;
 $badge-color: #354250;
 $error-color: #C34444;
 $warning-color: #DFBA57;
@@ -61,6 +61,14 @@ footer {
   margin: 0.5rem;
   padding: 0.5rem;
 
+  .accept-count {
+    width: 36px;
+    text-align: center;
+    font-size: 34px;
+    margin-left: -0.5rem;
+    margin-right: 0.5rem;
+  }
+
   img {
     vertical-align: middle;
   }
@@ -81,6 +89,10 @@ footer {
       content: "\f00c";
     }
 
+    .accept-count {
+      display: none;
+    }
+
     .pr-status {
       .success {
         color: white;
@@ -91,6 +103,10 @@ footer {
   &.pull-request--unmergeable {
     background: #D24D57;
     border-left: 36px solid #A20D17;
+
+    .accept-count {
+      display: none;
+    }
 
     &:before {
       color: #FFFFFF;

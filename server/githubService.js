@@ -82,7 +82,13 @@ function getPullRequestStatus(pr) {
         state: statuses.data[0].state,
         description: statuses.data[0].description
       };
+    } else {
+      pr.status = {
+        state: null,
+        description: null
+      };
     }
+
     delete pr.statuses_url;
   });
 }
@@ -127,7 +133,8 @@ exports.loadPullRequests = function loadPullRequests() {
           if (config.mergeRule.neverRegexp && configManager.getNeverMergeRegexp().test(pr.title)) {
             pr.unmergeable = true;
           } else if (pr.positiveComments >= config.mergeRule.positive &&
-              pr.negativeComments <= config.mergeRule.negative) {
+              pr.negativeComments <= config.mergeRule.negative &&
+              pr.status.state === 'success') {
             pr.mergeable = true;
           }
         });
