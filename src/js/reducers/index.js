@@ -30,22 +30,15 @@ export function reposReducer(state = [], action) {
   }
 }
 
-function sortPullRequests(pullRequests, sortByRepo, orderBy = 'updated') {
-  return [...pullRequests].sort((a, b) => {
-    if (sortByRepo) {
-      if (a.repoUrl < b.repoUrl) {
-        return 1;
-      }
-      if (a.repoUrl > b.repoUrl) {
-        return -1;
-      }
-    }
+function sortPullRequests(pullRequests) {
+  const orderKey = 'created';
 
-    if (a[orderBy] < b[orderBy]) {
-      return 1;
-    }
-    if (a[orderBy] > b[orderBy]) {
+  return [...pullRequests].sort((a, b) => {
+    if (a[orderKey] < b[orderKey]) {
       return -1;
+    }
+    if (a[orderKey] > b[orderKey]) {
+      return 1;
     }
 
     return 0;
@@ -55,10 +48,10 @@ function sortPullRequests(pullRequests, sortByRepo, orderBy = 'updated') {
 export function pullRequestsReducer(state = [], action) {
   switch (action.type) {
     case ActionTypes.ADD_PULL_REQUESTS:
-      return sortPullRequests(action.pullRequests, action.sortOptions.sortByRepo);
+      return sortPullRequests(action.pullRequests);
 
     case ActionTypes.SORT:
-      return sortPullRequests(state, action.sortOptions.sortByRepo, action.sortOptions.orderBy);
+      return sortPullRequests(state);
 
     case ActionTypes.UPDATE_PULL_REQUEST:
       return state.map(pullRequest => {
@@ -90,15 +83,6 @@ export function errorReducer(state = '', action) {
   switch (action.type) {
     case ActionTypes.SET_ERROR:
       return action.error;
-    default:
-      return state;
-  }
-}
-
-export function sortOptionsReducer(state = { sortByRepo: false, orderBy: 'updated' }, action) {
-  switch (action.type) {
-    case ActionTypes.SORT:
-      return action.sortOptions;
     default:
       return state;
   }
