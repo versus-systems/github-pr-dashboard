@@ -1,7 +1,5 @@
 node_modules
 dist
 npm-debug.log
-src/config/config.json
-config/config.json
 .idea/
 .DS_Store

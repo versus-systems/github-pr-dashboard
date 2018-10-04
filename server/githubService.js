@@ -5,19 +5,13 @@ const emoji = require('./emoji');
 const reviews = require('./reviews');
 
 function apiCall(url, headers = {}) {
-  const config = configManager.getConfig();
-  const options = { headers };
-  if (config.username && config.password) {
-    options.auth = {
-      username: config.username,
-      password: config.password
-    }
-  } else if (config.token ) {
-    options.auth = {
-      username: config.token 
+  const options = {
+    headers,
+    auth: {
+      username: process.env.GITHUB_PR_TOKEN
     }
   };
-  
+
   return axios.get(url, options);
 }
 

@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import PullRequest from './PullRequest';
 import LoadingOverlay from './LoadingOverlay';
 import ErrorMessage from './ErrorMessage';
-import Toolbar from './Toolbar';
-import Footer from './Footer';
 
 class Main extends React.Component {
 
@@ -64,9 +62,7 @@ class Main extends React.Component {
             {this.props.repos.length}
           </div>
         </div>
-        <Toolbar failedRepos={this.props.failedRepos} />
         {this.renderBody()}
-        <Footer />
       </div>
     );
   }
