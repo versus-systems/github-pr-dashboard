@@ -64,23 +64,28 @@ export function addFailedRepo(failedRepo) {
   };
 }
 
-export function loadPullRequests() {
+export function refresh() {
+  return {
+    type: ActionTypes.REFRESH
+  };
+}
+
+export function loadPullRequests(showLoading = false) {
   return (dispatch, getState) => {
     const { sortOptions } = getState();
-    dispatch({ type: ActionTypes.START_LOADING });
+    if (showLoading) {
+      dispatch({ type: ActionTypes.START_LOADING });
+    }
+
     return axios.get('/pulls').then(response => {
       dispatch(addPullRequests(response.data.pullRequests, sortOptions));
       dispatch(setRepos(response.data.repos));
       dispatch(setTitle(response.data.title || 'Pull Requests'));
+
+      setTimeout(() => dispatch(loadPullRequests(false)), 60000);
     }).catch(() => {
       dispatch(setError('Failed to load pull requests. Double check that all your repos exist!'));
     });
-  };
-}
-
-export function refresh() {
-  return {
-    type: ActionTypes.REFRESH
   };
 }
 
@@ -103,7 +108,7 @@ export function loginSuccess() {
 export function login(password) {
   return (dispatch) =>
     axios.post('/login', { password }).then(() => {
-      dispatch(loadPullRequests(undefined));
+      dispatch(loadPullRequests(true));
       dispatch(loginSuccess());
     }).catch(() => {
       alert("Login Failed") // eslint-disable-line
