@@ -1,10 +1,10 @@
 import React from 'react';
 
 const ICONS = {
-  success: 'check-circle',
-  pending: 'question-circle',
-  failure: 'times-circle',
-  error: 'times-circle'
+  success: 'check',
+  pending: 'question',
+  failure: 'times',
+  error: 'times'
 };
 
 export function Status(props) {
@@ -13,7 +13,7 @@ export function Status(props) {
   const { state, description } = status;
 
   return (
-    <div className="pr-status" title={description}>
+    <div className="status" title={description}>
       <i className={`fa fa-${ICONS[state]} ${state}`}></i>
     </div>
   );

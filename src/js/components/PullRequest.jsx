@@ -22,7 +22,6 @@ function getPrClassName(pr) {
 }
 
 export default class PullRequest extends React.Component {
-
   formatRelativeTime(date) {
     return moment(date).fromNow();
   }
@@ -31,24 +30,50 @@ export default class PullRequest extends React.Component {
     return `${header} ${moment(date).format('MMMM Do YYYY, h:mm:ss a')}`;
   }
 
+  daysPast(date) {
+    return moment().diff(date, 'days');
+  }
+
   render() {
     const pr = this.props.pullRequest;
     const className = getPrClassName(pr);
+    let acceptStatus;
+    let stalenessClassName;
+    const daysPast = this.daysPast(pr.created);
+
+    if (pr.unmergeable) {
+      acceptStatus = <i className="fa fa-exclamation-triangle"></i>;
+    } else if (pr.mergeable) {
+      acceptStatus = <i className="fa fa-check"></i>;
+    } else {
+      acceptStatus = pr.positiveComments;
+    }
+
+    if (daysPast > 6) {
+      stalenessClassName = `${CLASS_BASE}--stale`;
+    } else if (daysPast > 1) {
+      stalenessClassName = `${CLASS_BASE}--older`;
+    } else if (daysPast === 1) {
+      stalenessClassName = `${CLASS_BASE}--old`;
+    }
+
+    let shadowStyle = {};
+    if (daysPast > 0) {
+      shadowStyle = { boxShadow: `0px 0px 32px ${2 * daysPast}px #d0021b inset` };
+    }
 
     return (
-      <div className={className}>
+      <div className={`${className} ${stalenessClassName}`} style={shadowStyle} data-thing={1}>
         <div className="accept-count">
-          {pr.positiveComments}
+          {acceptStatus}
         </div>
+        <Status status={pr.status} />
         <UserPhoto size={50} user={pr.user} />
         <div className="pull-request-info">
           <div className="pull-request-title">
             <img src="images/git-pull-request.svg" alt="Pull request" />
             &nbsp;
             <a target="_blank" href={pr.url}>{pr.title}</a>
-            <Status
-              status={pr.status}
-            />
           </div>
           <div>
             <a target="_blank" href={pr.repoUrl}>

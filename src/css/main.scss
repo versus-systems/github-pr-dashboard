@@ -1,8 +1,8 @@
 $link-color: black;
 $badge-color: #354250;
-$error-color: #C34444;
+$error-color: #d0021b;
 $warning-color: #DFBA57;
-$success-color: #4AD964;
+$success-color: #21a12e;
 $repo-link-color: #bbdde1;
 
 body {
@@ -59,86 +59,25 @@ footer {
   border-radius: 5px;
   display: flex;
   margin: 0.5rem;
-  padding: 0.5rem;
+  overflow: hidden;
+
+  .accept-count, .status {
+    width: 56px;
+    align-self: stretch;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    font-size: 34px;
+  }
 
   .accept-count {
-    width: 36px;
-    text-align: center;
-    font-size: 34px;
-    margin-left: -0.5rem;
-    margin-right: 0.5rem;
+    font-weight: 600;
+    margin-left: 1rem;
   }
 
-  img {
-    vertical-align: middle;
-  }
-
-  &.pull-request--mergeable {
-    background: #90C695;
-    border-left: 36px solid #509655;
-
-    &:before {
-      color: #FFFFFF;
-      font-family: FontAwesome;
-      font-weight: normal;
-      font-style: normal;
-      display: inline-block;
-      text-decoration: inherit;
-      position: absolute;
-      margin-left: -34px;
-      content: "\f00c";
-    }
-
-    .accept-count {
-      display: none;
-    }
-
-    .pr-status {
-      .success {
-        color: white;
-      }
-    }
-  }
-
-  &.pull-request--unmergeable {
-    background: #D24D57;
-    border-left: 36px solid #A20D17;
-
-    .accept-count {
-      display: none;
-    }
-
-    &:before {
-      color: #FFFFFF;
-      font-family: FontAwesome;
-      font-weight: normal;
-      font-style: normal;
-      display: inline-block;
-      text-decoration: inherit;
-      position: absolute;
-      margin-left: -34px;
-      content: "\f071";
-    }
-  }
-
-  .pull-request-info {
-    flex-grow: 1;
-  }
-
-  .pull-request-title {
-    font-weight: bold;
-  }
-
-  .pull-request-last-updated {
-    background: $badge-color;
-    border-radius: 5px;
-    padding: 0.5rem 1rem;
-    color: #FFFFFF;
-  }
-
-  .pr-status {
-    display: inline-block;
-    margin-left: 0.5rem;
+  .status {
+    margin-right: 1rem;
 
     .success {
       color: $success-color;
@@ -151,29 +90,61 @@ footer {
     }
   }
 
-  .pr-comments {
-    display: inline-block;
+  img {
+    vertical-align: middle;
+  }
 
-    div {
-      display: inline-block;
-      margin-right: 1rem;
+  .fa-check {
+    color: $success-color;
+  }
+
+  &.pull-request--stale {
+    box-shadow: 0px 0px 16px 6px black inset;
+
+    .pull-request-last-updated {
+      width: 200px;
+      font-weight: 600;
+      font-size: 26px;
     }
+  }
 
-    .pr-comment-count {
+  &.pull-request--older {
+    box-shadow: 0px 0px 16px 6px $error-color inset;
 
+    .pull-request-last-updated {
+      width: 200px;
+      font-weight: 600;
+      font-size: 20px;
     }
+  }
 
-    .pr-comment-positive {
-      i {
-         color: green;
-      }
-    }
+  &.pull-request--old {
+    box-shadow: 0px 0px 16px 6px #f3aa03 inset;
 
-    .pr-comment-negative {
-      i {
-         color: red;
-      }
+    .pull-request-last-updated{
+      color: #f3aa03;
     }
+  }
+
+  .pull-request-info {
+    flex-grow: 1;
+    padding: 1rem 0;
+  }
+
+  .pull-request-title {
+    font-weight: bold;
+  }
+
+  .pull-request-last-updated {
+    width: 200px;
+    align-self: stretch;
+    align-items: center;
+    display: flex;
+    padding: 0.5rem 2rem 0.5rem 1rem;
+    color: #000;
+    text-align: right;
+    justify-content: flex-end;
+    font-weight: 600;
   }
 }
 
