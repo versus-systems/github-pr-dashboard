@@ -1,6 +1,14 @@
 const configManager = require('./configManager');
 const githubService = require('./githubService');
 
+exports.login = function login(req, res) {
+  if (req.body.password === process.env.LOGIN_PASSWORD) {
+    res.status(200).json(true);
+  } else {
+    res.status(500).json(false);
+  }
+};
+
 exports.getPullRequests = function getPullRequests(req, res) {
   const config = configManager.getConfig();
   githubService.loadPullRequests().then(prs => {
@@ -10,8 +18,6 @@ exports.getPullRequests = function getPullRequests(req, res) {
       title: config.title
     });
   }).catch(error => {
-    console.error(`Error loading pull requests: ${error.message}`);
-    console.error(error);
     res.status(500).json({
       error: `Failed to load pull requests: ${error.message}`
     });

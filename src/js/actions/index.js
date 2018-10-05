@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 export const ActionTypes = {
+  LOGIN_SUCCESS: 'LOGIN_SUCCESS',
+  LOGIN_ERROR: 'LOGIN_ERROR',
   ADD_PULL_REQUESTS: 'ADD_PULL_REQUESTS',
   UPDATE_PULL_REQUEST: 'UPDATE_PULL_REQUEST',
   SET_FAILED_REPOS: 'SET_FAILED_REPOS',
@@ -90,4 +92,20 @@ export function sort({ sortByRepo, orderBy }) {
       orderBy
     }
   };
+}
+
+export function loginSuccess() {
+  return {
+    type: ActionTypes.LOGIN_SUCCESS
+  };
+}
+
+export function login(password) {
+  return (dispatch) =>
+    axios.post('/login', { password }).then(() => {
+      dispatch(loadPullRequests(undefined));
+      dispatch(loginSuccess());
+    }).catch(() => {
+      alert("Login Failed") // eslint-disable-line
+    });
 }

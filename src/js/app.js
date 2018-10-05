@@ -8,14 +8,11 @@ import {
 
 import Dashboard from './components/Dashboard';
 import EditDashboard from './components/EditDashboard';
-import { loadPullRequests } from './actions';
 import configureStore from './store';
 
 import '../css/main.scss';
 
 const store = configureStore();
-
-store.dispatch(loadPullRequests(undefined));
 
 ReactDOM.render(
   <Provider store={store}>

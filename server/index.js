@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 configManager.loadConfig();
 emoji.init();
 
+app.post('/login', requestHandlers.login);
 app.get('/pulls', requestHandlers.getPullRequests);
 app.get('/config', requestHandlers.getConfig);
 app.get('/repoExists', requestHandlers.repoExists);

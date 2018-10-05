@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PullRequest from './PullRequest';
 import LoadingOverlay from './LoadingOverlay';
 import ErrorMessage from './ErrorMessage';
+import Login from './Login';
 
 class Main extends React.Component {
 
@@ -47,6 +48,10 @@ class Main extends React.Component {
   }
 
   render() {
+    if (!this.props.loggedIn) {
+      return <Login {...this.props} />;
+    }
+
     return (
       <div className="container">
         <div className="container-header">
@@ -64,6 +69,7 @@ class Main extends React.Component {
 }
 
 Main.propTypes = {
+  loggedIn: React.PropTypes.bool.isRequired,
   loading: React.PropTypes.bool.isRequired,
   pullRequests: React.PropTypes.array.isRequired,
   repos: React.PropTypes.array.isRequired,

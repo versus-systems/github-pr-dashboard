@@ -8,10 +8,12 @@ import {
   pullRequestsReducer,
   failedReposReducer,
   errorReducer,
+  loggedInReducer,
 } from '../reducers';
 
 export default function configureStore() {
   const reducer = combineReducers({
+    loggedIn: loggedInReducer,
     pullRequests: pullRequestsReducer,
     repos: reposReducer,
     failedRepos: failedReposReducer,

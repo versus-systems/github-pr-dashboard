@@ -12,6 +12,15 @@ export function loadingReducer(state = false, action) {
   }
 }
 
+export function loggedInReducer(state = false, action) {
+  switch (action.type) {
+    case ActionTypes.LOGIN_SUCCESS:
+      return true;
+    default:
+      return state;
+  }
+}
+
 export function titleReducer(state = '', action) {
   switch (action.type) {
     case ActionTypes.SET_TITLE:
