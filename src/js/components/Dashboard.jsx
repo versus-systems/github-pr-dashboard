@@ -56,11 +56,6 @@ class Main extends React.Component {
             &nbsp;
             {this.props.pullRequests.length}
           </div>
-          <div id="repo-count" title={`${this.props.repos.length} repositories`}>
-            <img role="presentation" src="images/repo.svg" />
-            &nbsp;
-            {this.props.repos.length}
-          </div>
         </div>
         {this.renderBody()}
       </div>
