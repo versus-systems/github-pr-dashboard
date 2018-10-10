@@ -7,6 +7,7 @@ export const ActionTypes = {
   UPDATE_PULL_REQUEST: 'UPDATE_PULL_REQUEST',
   SET_FAILED_REPOS: 'SET_FAILED_REPOS',
   REFRESH: 'REFRESH',
+  TIME_TO_CLOSE: 'TIME_TO_CLOSE',
   START_LOADING: 'START_LOADING',
   SET_ERROR: 'SET_ERROR',
   SET_REPOS: 'SET_REPOS',
@@ -25,6 +26,13 @@ export function setRepos(repos) {
   return {
     type: ActionTypes.SET_REPOS,
     repos
+  };
+}
+
+export function setTimeToClose(timeToClose) {
+  return {
+    type: ActionTypes.TIME_TO_CLOSE,
+    timeToClose
   };
 }
 
@@ -81,6 +89,7 @@ export function loadPullRequests(showLoading = false) {
       dispatch(addPullRequests(response.data.pullRequests, sortOptions));
       dispatch(setRepos(response.data.repos));
       dispatch(setTitle(response.data.title || 'Pull Requests'));
+      dispatch(setTimeToClose(response.data.timeToClose));
 
       setTimeout(() => dispatch(loadPullRequests(false)), 60000);
     }).catch(() => {

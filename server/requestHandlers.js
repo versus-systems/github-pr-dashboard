@@ -12,10 +12,13 @@ exports.login = function login(req, res) {
 exports.getPullRequests = function getPullRequests(req, res) {
   const config = configManager.getConfig();
   githubService.loadPullRequests().then(prs => {
-    res.status(200).json({
-      pullRequests: prs,
-      repos: config.repos,
-      title: config.title
+    githubService.getPastWeekAverage().then((average) => {
+      res.status(200).json({
+        pullRequests: prs,
+        timeToClose: average,
+        repos: config.repos,
+        title: config.title
+      });
     });
   }).catch(error => {
     res.status(500).json({
@@ -39,5 +42,13 @@ exports.repoExists = function getConfig(req, res) {
     res.status(200).json(true);
   }).catch(() => {
     res.status(404).json(false);
+  });
+};
+
+exports.getPastWeekAverage = function getPastWeekAverage(req, res) {
+  githubService.getPastWeekAverage().then((average) => {
+    res.status(200).json({ average });
+  }).catch(() => {
+    res.status(404).json({ success: false });
   });
 };

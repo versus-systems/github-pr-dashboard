@@ -9,6 +9,7 @@ import {
   failedReposReducer,
   errorReducer,
   loggedInReducer,
+  timeToCloseReducer,
 } from '../reducers';
 
 export default function configureStore() {
@@ -19,7 +20,8 @@ export default function configureStore() {
     failedRepos: failedReposReducer,
     loading: loadingReducer,
     error: errorReducer,
-    title: titleReducer
+    title: titleReducer,
+    timeToClose: timeToCloseReducer,
   });
 
   return createStore(reducer, {}, compose(

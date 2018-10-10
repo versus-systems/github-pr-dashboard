@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PullRequest from './PullRequest';
 import LoadingOverlay from './LoadingOverlay';
 import ErrorMessage from './ErrorMessage';
+import StatsPanel from './StatsPanel';
 import Login from './Login';
 
 class Main extends React.Component {
@@ -30,19 +31,29 @@ class Main extends React.Component {
   }
 
   renderBody() {
-    if (this.props.error) {
+    const { error, pullRequests, timeToClose } = this.props;
+
+    if (error) {
       return <ErrorMessage message={this.props.error} />;
     }
 
     return (
-      <div>
+      <div style={{ display: 'flex' }}>
         {this.renderFailedRepos()}
         {this.renderLoading()}
-        {this.props.pullRequests.map(pr =>
-          <div key={pr.id}>
-            <PullRequest key={pr.id} pullRequest={pr} />
-          </div>
-        )}
+        <div className="stats-panel-holder">
+          <StatsPanel
+            pullRequests={pullRequests.length}
+            timeToClose={timeToClose}
+          />
+        </div>
+        <div style={{ flex: 1 }}>
+          {pullRequests.map(pr =>
+            <div key={pr.id}>
+              <PullRequest key={pr.id} pullRequest={pr} />
+            </div>
+          )}
+        </div>
       </div>
     );
   }
@@ -54,14 +65,6 @@ class Main extends React.Component {
 
     return (
       <div className="container">
-        <div className="container-header">
-          <h1>{this.props.title}</h1>
-          <div id="pr-count" title={`${this.props.pullRequests.length} pull requests`}>
-            <img role="presentation" src="images/git-pull-request.svg" />
-            &nbsp;
-            {this.props.pullRequests.length}
-          </div>
-        </div>
         {this.renderBody()}
       </div>
     );
@@ -75,7 +78,8 @@ Main.propTypes = {
   repos: React.PropTypes.array.isRequired,
   title: React.PropTypes.string.isRequired,
   failedRepos: React.PropTypes.array.isRequired,
-  error: React.PropTypes.string.isRequired
+  error: React.PropTypes.string.isRequired,
+  timeToClose: React.PropTypes.string.isRequired
 };
 
 export default connect(state => state)(Main);

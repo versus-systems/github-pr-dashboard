@@ -3,6 +3,7 @@ const axios = require('axios');
 const configManager = require('./configManager');
 const emoji = require('./emoji');
 const reviews = require('./reviews');
+const graph = require('./graphQL');
 
 function apiCall(url, headers = {}) {
   const options = {
@@ -102,6 +103,10 @@ function getPullRequestReviews(pr) {
     }
   });
 }
+
+exports.getPastWeekAverage = function getPastWeekAverage() {
+  return graph.getPastWeekAverage();
+};
 
 exports.getRepo = function getRepo(owner, name) {
   const config = configManager.getConfig();

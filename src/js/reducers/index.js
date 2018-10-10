@@ -29,6 +29,15 @@ export function titleReducer(state = '', action) {
   }
 }
 
+export function timeToCloseReducer(state = '', action) {
+  switch (action.type) {
+    case ActionTypes.TIME_TO_CLOSE:
+      return action.timeToClose;
+    default:
+      return state;
+  }
+}
+
 export function reposReducer(state = [], action) {
   switch (action.type) {
     case ActionTypes.SET_REPOS:
