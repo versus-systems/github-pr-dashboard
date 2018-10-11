@@ -2,7 +2,6 @@ const axios = require('axios');
 
 const configManager = require('./configManager');
 const emoji = require('./emoji');
-const reviews = require('./reviews');
 const graph = require('./graphQL');
 
 function apiCall(url, headers = {}) {
@@ -61,21 +60,6 @@ function getPullRequestComments(pr) {
   });
 }
 
-function getPullRequestReactions(pr) {
-  const config = configManager.getConfig();
-  return apiCall(`${config.apiBaseUrl}/repos/${pr.repo}/issues/${pr.number}/reactions`, {
-    Accept: 'application/vnd.github.squirrel-girl-preview'
-  }).then(reactions => {
-    pr.reactions = emoji.getOtherReactions(reactions.data).map(reaction => ({
-      user: reaction.user.login,
-      content: reaction.content
-    }));
-
-    pr.positiveComments += emoji.countPositiveReactions(reactions.data);
-    pr.negativeComments += emoji.countNegativeReactions(reactions.data);
-  });
-}
-
 function getPullRequestStatus(pr) {
   return apiCall(pr.statuses_url).then(statuses => {
     if (statuses.data.length) {
@@ -96,10 +80,10 @@ function getPullRequestStatus(pr) {
 
 function getPullRequestReviews(pr) {
   const config = configManager.getConfig();
-  return apiCall(`${config.apiBaseUrl}/repos/${pr.repo}/pulls/${pr.number}/reviews`).then(reviewData => {
+  const url = `${config.apiBaseUrl}/repos/${pr.repo}/pulls/${pr.number}/reviews`;
+  return apiCall(url).then(reviewData => {
     if (reviewData.data.length) {
-      pr.positiveComments += reviews.countReviews(reviewData.data, 'APPROVED')
-      pr.negativeComments += reviews.countReviews(reviewData.data, 'CHANGES_REQUESTED')
+      pr.positiveComments += reviewData.data.filter(review => review.state === 'APPROVED').length;
     }
   });
 }
@@ -120,10 +104,6 @@ exports.loadPullRequests = function loadPullRequests() {
   return getPullRequests(repos).then(prs => {
     const commentsPromises = prs.map(pr => getPullRequestComments(pr));
     return Promise.all(commentsPromises).then(() => prs);
-  })
-  .then(prs => {
-    const reactionsPromises = prs.map(pr => getPullRequestReactions(pr));
-    return Promise.all(reactionsPromises).then(() => prs);
   })
   .then(prs => {
     const reviewPromises = prs.map(pr => getPullRequestReviews(pr));
