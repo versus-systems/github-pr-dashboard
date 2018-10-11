@@ -1,7 +1,6 @@
 const axios = require('axios');
 
 const configManager = require('./configManager');
-const emoji = require('./emoji');
 const graph = require('./graphQL');
 
 function apiCall(url, headers = {}) {
@@ -15,77 +14,34 @@ function apiCall(url, headers = {}) {
   return axios.get(url, options);
 }
 
-function getPullRequests(repos) {
-  const config = configManager.getConfig();
-
-  let pullRequests = [];
-  const promises = repos.map(repo => apiCall(`${config.apiBaseUrl}/repos/${repo}/pulls`));
-  return Promise.all(promises).then(results => {
-    results.forEach(result => {
-      pullRequests = pullRequests.concat(result.data);
-    });
-
-    return pullRequests.map(pr => ({
-      url: pr.html_url,
+function getPullRequests() {
+  return graph.getPullRequests().then((pullRequests) =>
+    pullRequests.map(pr => ({
+      url: pr.url,
       id: pr.id,
       number: pr.number,
       title: pr.title,
-      repo: pr.base.repo.full_name,
-      repoUrl: pr.base.repo.html_url,
-      repoId: pr.base.repo.id,
+      repo: pr.repository.nameWithOwner,
+      repoUrl: pr.repository.url,
+      repoId: pr.repository.id,
+      positiveComments: pr.approvals.totalCount,
       user: {
-        username: pr.user.login,
-        profileUrl: pr.user.html_url,
-        avatarUrl: pr.user.avatar_url
+        username: pr.author.login,
+        profileUrl: pr.author.url,
+        avatarUrl: pr.author.avatarUrl
       },
-      created: pr.created_at,
-      updated: pr.updated_at,
+      created: pr.createdAt,
+      updated: pr.updatedAt,
       comments_url: pr.comments_url,
-      statuses_url: pr.statuses_url
-    }));
-  });
-}
-
-function getPullRequestComments(pr) {
-  return apiCall(pr.comments_url).then(comments => {
-    pr.comments = comments.data.map(comment => ({
-      body: comment.body,
-      user: comment.user.login
-    }));
-
-    pr.positiveComments = emoji.countPositiveComments(comments.data);
-    pr.negativeComments = emoji.countNegativeComments(comments.data);
-
-    delete pr.comments_url;
-  });
-}
-
-function getPullRequestStatus(pr) {
-  return apiCall(pr.statuses_url).then(statuses => {
-    if (statuses.data.length) {
-      pr.status = {
-        state: statuses.data[0].state,
-        description: statuses.data[0].description
-      };
-    } else {
-      pr.status = {
-        state: null,
-        description: null
-      };
-    }
-
-    delete pr.statuses_url;
-  });
-}
-
-function getPullRequestReviews(pr) {
-  const config = configManager.getConfig();
-  const url = `${config.apiBaseUrl}/repos/${pr.repo}/pulls/${pr.number}/reviews`;
-  return apiCall(url).then(reviewData => {
-    if (reviewData.data.length) {
-      pr.positiveComments += reviewData.data.filter(review => review.state === 'APPROVED').length;
-    }
-  });
+      status: {
+        state: pr.commits.nodes[0].commit.status.state.toLowerCase(),
+        description: pr.commits.nodes[0].commit.status.state.toLowerCase()
+      },
+      unmergeable: pr.title.toLowerCase().includes('wip'),
+      mergeable: pr.commits.nodes[0].commit.status.state.toLowerCase() === 'success' &&
+        pr.approvals.totalCount >= 2,
+    }))
+  );
 }
 
 exports.getPastWeekData = function getPastWeekData() {
@@ -98,33 +54,5 @@ exports.getRepo = function getRepo(owner, name) {
 };
 
 exports.loadPullRequests = function loadPullRequests() {
-  const config = configManager.getConfig();
-  const repos = config.repos;
-
-  return getPullRequests(repos).then(prs => {
-    const commentsPromises = prs.map(pr => getPullRequestComments(pr));
-    return Promise.all(commentsPromises).then(() => prs);
-  })
-  .then(prs => {
-    const reviewPromises = prs.map(pr => getPullRequestReviews(pr));
-    return Promise.all(reviewPromises).then(() => prs);
-  })
-  .then(prs => {
-    const statusPromises = prs.map(pr => getPullRequestStatus(pr));
-    return Promise.all(statusPromises).then(() => {
-      prs.sort((p1, p2) => new Date(p2.updated).getTime() - new Date(p1.updated).getTime());
-      if (configManager.hasMergeRules()) {
-        prs.forEach(pr => {
-          if (config.mergeRule.neverRegexp && configManager.getNeverMergeRegexp().test(pr.title)) {
-            pr.unmergeable = true;
-          } else if (pr.positiveComments >= config.mergeRule.positive &&
-              pr.negativeComments <= config.mergeRule.negative &&
-              pr.status.state === 'success') {
-            pr.mergeable = true;
-          }
-        });
-      }
-      return prs;
-    });
-  });
+  return getPullRequests();
 };

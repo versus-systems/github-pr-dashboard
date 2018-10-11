@@ -68,3 +68,69 @@ exports.getPastWeekData = function getPastWeekData() {
       };
     });
 };
+
+exports.getPullRequests = function getPullRequests() {
+  const query = `
+    query {
+      repositoryOwner(login: "versus-systems") {
+        Umbrella: repository(name: "versus_umbrella") {
+          ...pullRequests
+        }
+        SDK: repository(name: "sdk-unity") {
+          ...pullRequests
+        }
+      }
+    }
+
+    fragment pullRequests on Repository {
+      pullRequests(last: 50, states: [OPEN], orderBy: { field: UPDATED_AT, direction: ASC }) {
+        edges {
+          node {
+            title
+            url
+            id
+            number
+            createdAt
+            repository {
+              nameWithOwner
+              url
+              id
+            }
+            author {
+              login
+              avatarUrl
+              url
+            }
+            commits(last: 1) {
+              nodes {
+                commit {
+                  status {
+                    state
+                  }
+                }
+              }
+            }
+            comments {
+              totalCount
+            }
+            approvals: reviews(first:30, states: [APPROVED]) {
+              totalCount
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  return graphCall(query)
+    .then((result) => {
+      const repos = Object.keys(result.data.data.repositoryOwner);
+      const pullRequests = repos.reduce((prs, repoName) => {
+        const repo = result.data.data.repositoryOwner[repoName];
+        return [...prs, ...repo.pullRequests.edges];
+      }, [])
+      .map((pr) => pr.node);
+
+      return pullRequests;
+    });
+};
