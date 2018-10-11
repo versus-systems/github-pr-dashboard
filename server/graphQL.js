@@ -1,4 +1,5 @@
 const axios = require('axios');
+const queries = require('./queries');
 const time = require('./time');
 
 function graphCall(query) {
@@ -9,59 +10,35 @@ function graphCall(query) {
   );
 }
 
+function extractPullRequests(result) {
+  const repos = Object.keys(result.data.data.repositoryOwner);
+  return repos.reduce((prs, repoName) => {
+    const repo = result.data.data.repositoryOwner[repoName];
+    return [...prs, ...repo.pullRequests.edges];
+  }, [])
+  .map((pr) => pr.node);
+}
+
 exports.getPastWeekData = function getPastWeekData() {
-  const query = `
-    query {
-      repositoryOwner(login: "versus-systems") {
-        Umbrella: repository(name: "versus_umbrella") {
-          ...pullRequests
-        }
-        SDK: repository(name: "sdk-unity") {
-          ...pullRequests
-        }
-      }
-    }
-
-    fragment pullRequests on Repository {
-      pullRequests(
-        last: 50,
-        states: [CLOSED, MERGED],
-        orderBy: { field: UPDATED_AT, direction: ASC }
-      ) {
-        edges {
-          node {
-            title
-            number
-            createdAt
-            closedAt
-          }
-        }
-      }
-    }
-  `;
-
-  return graphCall(query)
+  return graphCall(queries.closedPullRequests)
     .then((result) => {
-      const repos = Object.keys(result.data.data.repositoryOwner);
-      const pullRequests = repos.reduce((prs, repoName) => {
-        const repo = result.data.data.repositoryOwner[repoName];
-        return [...prs, ...repo.pullRequests.edges];
-      }, []);
+      const pullRequests = extractPullRequests(result);
 
       const pastWeek = pullRequests.filter((pr) => {
         const lastWeek = Date.now() - 604800000; // one week;
-        const closedDate = new Date(pr.node.closedAt).getTime();
+        const closedDate = new Date(pr.closedAt).getTime();
         return closedDate > lastWeek;
       });
 
       const intervals = pastWeek.map(pr => {
-        const createdAt = new Date(pr.node.createdAt).getTime();
-        const closedAt = new Date(pr.node.closedAt).getTime();
+        const createdAt = new Date(pr.createdAt).getTime();
+        const closedAt = new Date(pr.closedAt).getTime();
         return closedAt - createdAt;
       });
 
       const sum = intervals.reduce((a, b) => a + b);
       const average = sum / pastWeek.length;
+
       return {
         merged: pastWeek.length,
         averageTime: time.millisecondsToStr(average),
@@ -70,67 +47,32 @@ exports.getPastWeekData = function getPastWeekData() {
 };
 
 exports.getPullRequests = function getPullRequests() {
-  const query = `
-    query {
-      repositoryOwner(login: "versus-systems") {
-        Umbrella: repository(name: "versus_umbrella") {
-          ...pullRequests
-        }
-        SDK: repository(name: "sdk-unity") {
-          ...pullRequests
-        }
-      }
-    }
-
-    fragment pullRequests on Repository {
-      pullRequests(last: 50, states: [OPEN], orderBy: { field: UPDATED_AT, direction: ASC }) {
-        edges {
-          node {
-            title
-            url
-            id
-            number
-            createdAt
-            repository {
-              nameWithOwner
-              url
-              id
-            }
-            author {
-              login
-              avatarUrl
-              url
-            }
-            commits(last: 1) {
-              nodes {
-                commit {
-                  status {
-                    state
-                  }
-                }
-              }
-            }
-            comments {
-              totalCount
-            }
-            approvals: reviews(first:30, states: [APPROVED]) {
-              totalCount
-            }
-          }
-        }
-      }
-    }
-  `;
-
-  return graphCall(query)
-    .then((result) => {
-      const repos = Object.keys(result.data.data.repositoryOwner);
-      const pullRequests = repos.reduce((prs, repoName) => {
-        const repo = result.data.data.repositoryOwner[repoName];
-        return [...prs, ...repo.pullRequests.edges];
-      }, [])
-      .map((pr) => pr.node);
-
-      return pullRequests;
-    });
+  return graphCall(queries.openPullRequests)
+    .then((result) => extractPullRequests(result))
+    .then((pullRequests) =>
+      pullRequests.map(pr => ({
+        url: pr.url,
+        id: pr.id,
+        number: pr.number,
+        title: pr.title,
+        repo: pr.repository.nameWithOwner,
+        repoUrl: pr.repository.url,
+        repoId: pr.repository.id,
+        positiveComments: pr.approvals.totalCount,
+        user: {
+          username: pr.author.login,
+          profileUrl: pr.author.url,
+          avatarUrl: pr.author.avatarUrl
+        },
+        created: pr.createdAt,
+        updated: pr.updatedAt,
+        status: {
+          state: pr.commits.nodes[0].commit.status.state.toLowerCase(),
+          description: pr.commits.nodes[0].commit.status.state.toLowerCase()
+        },
+        unmergeable: pr.title.toLowerCase().includes('wip'),
+        mergeable: pr.commits.nodes[0].commit.status.state.toLowerCase() === 'success' &&
+          pr.approvals.totalCount >= 2,
+      }))
+    );
 };
