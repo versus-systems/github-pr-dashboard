@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../images/405.svg';
 
-const StatsPanel = ({ pullRequests, timeToClose }) => (
+const StatsPanel = ({ pullRequests, timeToClose, mergedThisWeek }) => (
   <div className="stats-panel">
     <img src="images/405.svg" alt="Repository" />
 
@@ -11,6 +11,15 @@ const StatsPanel = ({ pullRequests, timeToClose }) => (
       </div>
       <div className="stat-label">
         Open Pull Requests
+      </div>
+    </div>
+
+    <div className="stat-holder">
+      <div className="stat">
+        {mergedThisWeek}
+      </div>
+      <div className="stat-label">
+        Merged This Week
       </div>
     </div>
 
@@ -28,6 +37,7 @@ const StatsPanel = ({ pullRequests, timeToClose }) => (
 StatsPanel.propTypes = {
   pullRequests: React.PropTypes.array.isRequired,
   timeToClose: React.PropTypes.number.isRequired,
+  mergedThisWeek: React.PropTypes.number.isRequired,
 };
 
 export default StatsPanel;

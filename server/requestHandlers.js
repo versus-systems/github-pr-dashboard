@@ -12,10 +12,11 @@ exports.login = function login(req, res) {
 exports.getPullRequests = function getPullRequests(req, res) {
   const config = configManager.getConfig();
   githubService.loadPullRequests().then(prs => {
-    githubService.getPastWeekAverage().then((average) => {
+    githubService.getPastWeekData().then(({ merged, averageTime }) => {
       res.status(200).json({
         pullRequests: prs,
-        timeToClose: average,
+        timeToClose: averageTime,
+        mergedThisWeek: merged,
         repos: config.repos,
         title: config.title
       });
@@ -45,8 +46,8 @@ exports.repoExists = function getConfig(req, res) {
   });
 };
 
-exports.getPastWeekAverage = function getPastWeekAverage(req, res) {
-  githubService.getPastWeekAverage().then((average) => {
+exports.getPastWeekData = function getPastWeekData(req, res) {
+  githubService.getPastWeekData().then((average) => {
     res.status(200).json({ average });
   }).catch(() => {
     res.status(404).json({ success: false });

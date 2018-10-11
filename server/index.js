@@ -16,7 +16,7 @@ emoji.init();
 
 app.post('/login', requestHandlers.login);
 app.get('/pulls', requestHandlers.getPullRequests);
-app.get('/timeToClose', requestHandlers.getPastWeekAverage);
+app.get('/timeToClose', requestHandlers.getPastWeekData);
 app.get('/config', requestHandlers.getConfig);
 app.get('/repoExists', requestHandlers.repoExists);
 app.put('/config', requestHandlers.updateConfig);

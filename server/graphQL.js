@@ -9,7 +9,7 @@ function graphCall(query) {
   );
 }
 
-exports.getPastWeekAverage = function getPastWeekAverage() {
+exports.getPastWeekData = function getPastWeekData() {
   const query = `
     query {
       repositoryOwner(login: "versus-systems") {
@@ -62,6 +62,9 @@ exports.getPastWeekAverage = function getPastWeekAverage() {
 
       const sum = intervals.reduce((a, b) => a + b);
       const average = sum / pastWeek.length;
-      return time.millisecondsToStr(average);
+      return {
+        merged: pastWeek.length,
+        averageTime: time.millisecondsToStr(average),
+      };
     });
 };

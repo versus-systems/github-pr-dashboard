@@ -104,8 +104,8 @@ function getPullRequestReviews(pr) {
   });
 }
 
-exports.getPastWeekAverage = function getPastWeekAverage() {
-  return graph.getPastWeekAverage();
+exports.getPastWeekData = function getPastWeekData() {
+  return graph.getPastWeekData();
 };
 
 exports.getRepo = function getRepo(owner, name) {

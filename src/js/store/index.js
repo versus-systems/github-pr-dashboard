@@ -10,6 +10,7 @@ import {
   errorReducer,
   loggedInReducer,
   timeToCloseReducer,
+  mergedThisWeekReducer,
 } from '../reducers';
 
 export default function configureStore() {
@@ -22,6 +23,7 @@ export default function configureStore() {
     error: errorReducer,
     title: titleReducer,
     timeToClose: timeToCloseReducer,
+    mergedThisWeek: mergedThisWeekReducer,
   });
 
   return createStore(reducer, {}, compose(

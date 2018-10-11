@@ -31,7 +31,7 @@ class Main extends React.Component {
   }
 
   renderBody() {
-    const { error, pullRequests, timeToClose } = this.props;
+    const { error, pullRequests, timeToClose, mergedThisWeek } = this.props;
 
     if (error) {
       return <ErrorMessage message={this.props.error} />;
@@ -45,6 +45,7 @@ class Main extends React.Component {
           <StatsPanel
             pullRequests={pullRequests.length}
             timeToClose={timeToClose}
+            mergedThisWeek={mergedThisWeek}
           />
         </div>
         <div style={{ flex: 1 }}>
@@ -79,7 +80,8 @@ Main.propTypes = {
   title: React.PropTypes.string.isRequired,
   failedRepos: React.PropTypes.array.isRequired,
   error: React.PropTypes.string.isRequired,
-  timeToClose: React.PropTypes.string.isRequired
+  timeToClose: React.PropTypes.string.isRequired,
+  mergedThisWeek: React.PropTypes.number.isRequired,
 };
 
 export default connect(state => state)(Main);

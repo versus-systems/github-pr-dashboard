@@ -38,6 +38,15 @@ export function timeToCloseReducer(state = '', action) {
   }
 }
 
+export function mergedThisWeekReducer(state = 0, action) {
+  switch (action.type) {
+    case ActionTypes.SET_MERGED_THIS_WEEK:
+      return action.mergedThisWeek;
+    default:
+      return state;
+  }
+}
+
 export function reposReducer(state = [], action) {
   switch (action.type) {
     case ActionTypes.SET_REPOS:

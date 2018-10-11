@@ -12,6 +12,7 @@ export const ActionTypes = {
   SET_ERROR: 'SET_ERROR',
   SET_REPOS: 'SET_REPOS',
   SET_TITLE: 'SET_TITLE',
+  SET_MERGED_THIS_WEEK: 'SET_MERGED_THIS_WEEK',
   SORT: 'SORT'
 };
 
@@ -40,6 +41,13 @@ export function setTitle(title) {
   return {
     type: ActionTypes.SET_TITLE,
     title
+  };
+}
+
+export function setMergedThisWeek(mergedThisWeek) {
+  return {
+    type: ActionTypes.SET_MERGED_THIS_WEEK,
+    mergedThisWeek
   };
 }
 
@@ -90,6 +98,7 @@ export function loadPullRequests(showLoading = false) {
       dispatch(setRepos(response.data.repos));
       dispatch(setTitle(response.data.title || 'Pull Requests'));
       dispatch(setTimeToClose(response.data.timeToClose));
+      dispatch(setMergedThisWeek(response.data.mergedThisWeek));
 
       setTimeout(() => dispatch(loadPullRequests(false)), 60000);
     }).catch(() => {
