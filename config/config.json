@@ -1,7 +1,10 @@
 {
   "apiBaseUrl":"https://api.github.com",
   "groupByRepo":false,
-  "repos":["versus-systems/versus_umbrella"],
+  "repos":[
+    "versus-systems/versus_umbrella",
+    "versus-systems/sdk-unity"
+  ],
   "comments": {
     "positive":[":+1:",":thumbsup:"],
     "negative":[":-1:",":thumbsdown:"]
