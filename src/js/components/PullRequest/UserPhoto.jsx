@@ -2,9 +2,9 @@ import React from 'react';
 
 export default function UserPhoto(props) {
   const url = props.user.avatarUrl;
-  const username = props.user.username;
+  const username = props.user.login;
   const size = props.size;
-  const profileUrl = props.user.profileUrl;
+  const profileUrl = props.user.url;
 
   const linkStyle = { height: `${size}px` };
 

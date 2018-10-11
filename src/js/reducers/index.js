@@ -57,7 +57,7 @@ export function reposReducer(state = [], action) {
 }
 
 function sortPullRequests(pullRequests) {
-  const orderKey = 'created';
+  const orderKey = 'createdAt';
 
   return [...pullRequests].sort((a, b) => {
     if (a[orderKey] < b[orderKey]) {

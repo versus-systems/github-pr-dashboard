@@ -39,7 +39,7 @@ export default class PullRequest extends React.Component {
     const className = getPrClassName(pr);
     let acceptStatus;
     let stalenessClassName;
-    const daysPast = this.daysPast(pr.created);
+    const daysPast = this.daysPast(pr.createdAt);
 
     if (pr.unmergeable) {
       acceptStatus = <i className="fa fa-exclamation-triangle"></i>;
@@ -68,7 +68,7 @@ export default class PullRequest extends React.Component {
           {acceptStatus}
         </div>
         <Status status={pr.status} />
-        <UserPhoto size={50} user={pr.user} />
+        <UserPhoto size={50} user={pr.author} />
         <div className="pull-request-info">
           <div className="pull-request-title">
             <img src="images/git-pull-request.svg" alt="Pull request" />
@@ -76,16 +76,16 @@ export default class PullRequest extends React.Component {
             <a target="_blank" href={pr.url}>{pr.title}</a>
           </div>
           <div>
-            <a target="_blank" href={pr.repoUrl}>
-              <img src="images/repo.svg" alt="Repository" /> {pr.repo}
+            <a target="_blank" href={pr.repository.url}>
+              <img src="images/repo.svg" alt="Repository" /> {pr.repository.nameWithOwner}
             </a>
           </div>
         </div>
         <div
           className="pull-request-last-updated"
-          title={this.formatTime('Last updated', pr.created)}
+          title={this.formatTime('Last updated', pr.createdAt)}
         >
-          {this.formatRelativeTime(pr.created)}
+          {this.formatRelativeTime(pr.createdAt)}
         </div>
       </div>
     );
