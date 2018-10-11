@@ -1,18 +1,4 @@
-const axios = require('axios');
-
-const configManager = require('./configManager');
 const graph = require('./graphQL');
-
-function apiCall(url, headers = {}) {
-  const options = {
-    headers,
-    auth: {
-      username: process.env.GITHUB_PR_TOKEN
-    }
-  };
-
-  return axios.get(url, options);
-}
 
 function getPullRequests() {
   return graph.getPullRequests().then((pullRequests) =>
@@ -46,11 +32,6 @@ function getPullRequests() {
 
 exports.getPastWeekData = function getPastWeekData() {
   return graph.getPastWeekData();
-};
-
-exports.getRepo = function getRepo(owner, name) {
-  const config = configManager.getConfig();
-  return apiCall(`${config.apiBaseUrl}/repos/${owner}/${name}`);
 };
 
 exports.loadPullRequests = function loadPullRequests() {

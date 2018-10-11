@@ -50,7 +50,6 @@
     "axios": "^0.13.1",
     "bluebird": "^3.4.0",
     "body-parser": "^1.17.1",
-    "emojione": "^2.2.6",
     "express": "^4.15.2",
     "lodash": "^4.17.4",
     "moment": "^2.13.0",
