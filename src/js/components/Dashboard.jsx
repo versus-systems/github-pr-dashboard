@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PullRequest from './PullRequest';
-import LoadingOverlay from './LoadingOverlay';
+import LoadingIndicator from './LoadingIndicator';
 import ErrorMessage from './ErrorMessage';
 import StatsPanel from './StatsPanel';
 import Login from './Login';
@@ -11,7 +11,7 @@ class Main extends React.Component {
   renderLoading() {
     if (this.props.loading) {
       return (
-        <LoadingOverlay />
+        <LoadingIndicator />
       );
     }
     return <div></div>;

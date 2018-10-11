@@ -1,8 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 
-import '../../images/repo.svg';
-import '../../images/git-pull-request.svg';
+import '../../../images/repo.svg';
+import '../../../images/git-pull-request.svg';
 
 import UserPhoto from './UserPhoto';
 import { Status } from './Status';
