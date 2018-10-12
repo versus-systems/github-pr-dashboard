@@ -7,5 +7,9 @@ exports.millisecondsToStr = function millisecondsToStr(milliseconds) {
   const days = Math.floor(hours / 24);
   const remainingHours = Math.floor(hours % 24);
 
+  if (days === 0) {
+    return `${remainingHours} hour${numberEnding(hours)}`;
+  }
+
   return `${days} day${numberEnding(days)} ${remainingHours} hour${numberEnding(hours)}`;
 };
