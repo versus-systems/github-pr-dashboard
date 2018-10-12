@@ -1,25 +1,10 @@
 import React from 'react';
 import moment from 'moment';
-
-import '../../../images/repo.svg';
-import '../../../images/git-pull-request.svg';
-
 import UserPhoto from './UserPhoto';
 import { Status } from './Status';
 
-const CLASS_BASE = 'pull-request';
-const CLASS_UNMERGEABLE = `${CLASS_BASE} ${CLASS_BASE}--unmergeable`;
-const CLASS_MERGEABLE = `${CLASS_BASE} ${CLASS_BASE}--mergeable`;
-
-function getPrClassName(pr) {
-  if (pr.unmergeable) {
-    return CLASS_UNMERGEABLE;
-  } else if (pr.mergeable) {
-    return CLASS_MERGEABLE;
-  }
-
-  return CLASS_BASE;
-}
+import '../../../images/repo.svg';
+import '../../../images/git-pull-request.svg';
 
 export default class PullRequest extends React.Component {
   formatRelativeTime(date) {
@@ -36,25 +21,24 @@ export default class PullRequest extends React.Component {
 
   render() {
     const pr = this.props.pullRequest;
-    const className = getPrClassName(pr);
     let acceptStatus;
     let stalenessClassName;
     const daysPast = this.daysPast(pr.createdAt);
 
-    if (pr.unmergeable) {
+    if (pr.wip) {
       acceptStatus = <i className="fa fa-exclamation-triangle"></i>;
-    } else if (pr.mergeable) {
+    } else if (pr.approvals >= 2) {
       acceptStatus = <i className="fa fa-check"></i>;
     } else {
-      acceptStatus = pr.positiveComments;
+      acceptStatus = pr.approvals;
     }
 
     if (daysPast > 6) {
-      stalenessClassName = `${CLASS_BASE}--stale`;
+      stalenessClassName = 'pull-request--stale';
     } else if (daysPast > 1) {
-      stalenessClassName = `${CLASS_BASE}--older`;
+      stalenessClassName = 'pull-request--older';
     } else if (daysPast === 1) {
-      stalenessClassName = `${CLASS_BASE}--old`;
+      stalenessClassName = 'pull-request--old';
     }
 
     let shadowStyle = {};
@@ -63,7 +47,7 @@ export default class PullRequest extends React.Component {
     }
 
     return (
-      <div className={`${className} ${stalenessClassName}`} style={shadowStyle} data-thing={1}>
+      <div className={`pull-request ${stalenessClassName}`} style={shadowStyle}>
         <div className="accept-count">
           {acceptStatus}
         </div>

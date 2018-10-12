@@ -55,13 +55,12 @@ exports.loadPullRequests = function loadPullRequests() {
 
         return {
           ...pr,
-          positiveComments: pr.approvals.totalCount,
+          approvals: pr.approvals.totalCount,
+          wip: pr.title.toLowerCase().includes('wip'),
           status: {
             state: status,
             description: status
           },
-          unmergeable: pr.title.toLowerCase().includes('wip'),
-          mergeable: status === 'success' && pr.approvals.totalCount >= 2,
         };
       })
     );
