@@ -1,4 +1,5 @@
 import React from 'react';
+import { CSSTransitionGroup } from 'react-transition-group';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PullRequest from './PullRequest';
@@ -56,11 +57,17 @@ class Main extends React.Component {
           />
         </div>
         <div style={{ flex: 1 }}>
-          {pullRequests.map(pr =>
-            <div key={pr.id}>
-              <PullRequest key={pr.id} pullRequest={pr} />
-            </div>
-          )}
+          <CSSTransitionGroup
+            transitionName="pr"
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={800}
+          >
+            {pullRequests.map(pr =>
+              <div key={pr.id}>
+                <PullRequest key={pr.id} pullRequest={pr} />
+              </div>
+            )}
+          </CSSTransitionGroup>
         </div>
       </div>
     );

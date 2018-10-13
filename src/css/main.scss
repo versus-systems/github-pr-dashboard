@@ -62,13 +62,16 @@ footer {
   }
 }
 
+.pull-request-wrapper {
+  padding: 0.25rem 0.5rem;
+}
+
 .pull-request {
   align-items: center;
   background-color: #FEFEFE;
   border: 1px solid #CCCCCC;
   border-radius: 5px;
   display: flex;
-  margin: 0.5rem;
   overflow: hidden;
 
   .accept-count, .status {
@@ -155,6 +158,41 @@ footer {
     align-self: center;
     border-radius: 5px;
   }
+}
+
+.pr-enter {
+  opacity: 0.01;
+}
+
+.pr-enter.pr-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.pr-appear {
+  opacity: 0.01;
+}
+
+.pr-appear.pr-appear-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.pr-enter.pr-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.pr-leave {
+  opacity: 1;
+  max-height: 100px;
+}
+
+.pr-leave.pr-leave-active {
+  opacity: 0.01;
+  max-height: 0px;
+  overflow: hidden;
+  transition: all 500ms ease-in;
 }
 
 a {

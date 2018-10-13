@@ -100,7 +100,7 @@ export function loadPullRequests(showLoading = false) {
       dispatch(setTimeToClose(response.data.timeToClose));
       dispatch(setMergedThisWeek(response.data.mergedThisWeek));
 
-      setTimeout(() => dispatch(loadPullRequests(false)), 60000);
+      setTimeout(() => dispatch(loadPullRequests(false)), 10000);
     }).catch(() => {
       dispatch(setError('Failed to load pull requests. Double check that all your repos exist!'));
     });

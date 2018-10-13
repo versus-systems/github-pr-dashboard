@@ -47,29 +47,31 @@ export default class PullRequest extends React.Component {
     }
 
     return (
-      <div className={`pull-request ${stalenessClassName}`} style={shadowStyle}>
-        <div className="accept-count">
-          {acceptStatus}
-        </div>
-        <Status status={pr.status} />
-        <UserPhoto size={50} user={pr.author} />
-        <div className="pull-request-info">
-          <div className="pull-request-title">
-            <img src="images/git-pull-request.svg" alt="Pull request" />
-            &nbsp;
-            <a target="_blank" href={pr.url}>{pr.title}</a>
+      <div className="pull-request-wrapper">
+        <div className={`pull-request ${stalenessClassName}`} style={shadowStyle}>
+          <div className="accept-count">
+            {acceptStatus}
           </div>
-          <div>
-            <a target="_blank" href={pr.repository.url}>
-              <img src="images/repo.svg" alt="Repository" /> {pr.repository.nameWithOwner}
-            </a>
+          <Status status={pr.status} />
+          <UserPhoto size={50} user={pr.author} />
+          <div className="pull-request-info">
+            <div className="pull-request-title">
+              <img src="images/git-pull-request.svg" alt="Pull request" />
+              &nbsp;
+              <a target="_blank" href={pr.url}>{pr.title}</a>
+            </div>
+            <div>
+              <a target="_blank" href={pr.repository.url}>
+                <img src="images/repo.svg" alt="Repository" /> {pr.repository.nameWithOwner}
+              </a>
+            </div>
           </div>
-        </div>
-        <div
-          className="pull-request-last-updated"
-          title={this.formatTime('Last updated', pr.createdAt)}
-        >
-          {this.formatRelativeTime(pr.createdAt)}
+          <div
+            className="pull-request-last-updated"
+            title={this.formatTime('Last updated', pr.createdAt)}
+          >
+            {this.formatRelativeTime(pr.createdAt)}
+          </div>
         </div>
       </div>
     );
