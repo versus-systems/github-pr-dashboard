@@ -11,7 +11,7 @@ export function loadingReducer(state = false, action) {
   }
 }
 
-export function loggedInReducer(state = false, action) {
+export function loggedInReducer(state = !!localStorage.getItem('token'), action) {
   switch (action.type) {
     case ActionTypes.LOGIN_SUCCESS:
       return true;

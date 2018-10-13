@@ -1,12 +1,19 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PullRequest from './PullRequest';
 import LoadingIndicator from './LoadingIndicator';
 import ErrorMessage from './ErrorMessage';
 import StatsPanel from './StatsPanel';
 import Login from './Login';
+import { loadPullRequests } from '../actions';
 
 class Main extends React.Component {
+  componentDidMount() {
+    if (this.props.loggedIn) {
+      this.props.actions.loadPullRequests(true);
+    }
+  }
 
   renderLoading() {
     if (this.props.loading) {
@@ -82,6 +89,11 @@ Main.propTypes = {
   error: React.PropTypes.string.isRequired,
   timeToClose: React.PropTypes.string.isRequired,
   mergedThisWeek: React.PropTypes.number.isRequired,
+  actions: React.PropTypes.object.isRequired,
 };
 
-export default connect(state => state)(Main);
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({ loadPullRequests }, dispatch),
+});
+
+export default connect(state => state, mapDispatchToProps)(Main);

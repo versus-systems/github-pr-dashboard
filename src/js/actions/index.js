@@ -93,7 +93,7 @@ export function loadPullRequests(showLoading = false) {
       dispatch({ type: ActionTypes.START_LOADING });
     }
 
-    return axios.get('/pulls').then(response => {
+    return axios.get(`/pulls?token=${localStorage.getItem('token')}`).then(response => {
       dispatch(addPullRequests(response.data.pullRequests, sortOptions));
       dispatch(setRepos(response.data.repos));
       dispatch(setTitle(response.data.title || 'Pull Requests'));
@@ -125,7 +125,8 @@ export function loginSuccess() {
 
 export function login(password) {
   return (dispatch) =>
-    axios.post('/login', { password }).then(() => {
+    axios.post('/login', { password }).then((res) => {
+      localStorage.setItem('token', res.data.token);
       dispatch(loadPullRequests(true));
       dispatch(loginSuccess());
     }).catch(() => {

@@ -3,7 +3,7 @@ const githubService = require('./githubService');
 
 exports.login = function login(req, res) {
   if (req.body.password === process.env.LOGIN_PASSWORD) {
-    res.status(200).json(true);
+    res.status(200).json({ token: process.env.LOGIN_PASSWORD });
   } else {
     res.status(500).json(false);
   }

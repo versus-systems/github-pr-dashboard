@@ -3,13 +3,22 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const requestHandlers = require('./requestHandlers');
 
+function isAuthenticated(req, res, next) {
+  if (req.query.token === process.env.LOGIN_PASSWORD) {
+    next();
+    return;
+  }
+
+  res.status(401).json({ Authenticated: false });
+}
+
 const app = express();
 
 app.use(express.static('dist'));
 app.use(bodyParser.json());
 
 app.post('/login', requestHandlers.login);
-app.get('/pulls', requestHandlers.getPullRequests);
+app.get('/pulls', isAuthenticated, requestHandlers.getPullRequests);
 app.get('*', (req, res) => {
   res.sendFile(path.resolve('dist', 'index.html'));
 });
