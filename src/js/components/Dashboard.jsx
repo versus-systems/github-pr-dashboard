@@ -56,7 +56,7 @@ class Main extends React.Component {
             mergedThisWeek={mergedThisWeek}
           />
         </div>
-        <div style={{ flex: 1 }}>
+        <div style={{ flex: 1, marginTop: '0.25rem' }}>
           <CSSTransitionGroup
             transitionName="pr"
             transitionEnterTimeout={500}
