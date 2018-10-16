@@ -21,6 +21,7 @@ app.use(bodyParser.json());
 
 app.post('/login', requestHandlers.login);
 app.get('/pulls', isAuthenticated, requestHandlers.getPullRequests);
+app.get('/teamMembers', isAuthenticated, requestHandlers.getTeam);
 app.get('*', (req, res) => {
   res.sendFile(path.resolve('dist', 'index.html'));
 });

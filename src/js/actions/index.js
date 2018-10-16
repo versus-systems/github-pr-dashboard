@@ -12,6 +12,7 @@ export const ActionTypes = {
   SET_ERROR: 'SET_ERROR',
   SET_REPOS: 'SET_REPOS',
   SET_TITLE: 'SET_TITLE',
+  SET_TEAM: 'SET_TEAM',
   SET_MERGED_THIS_WEEK: 'SET_MERGED_THIS_WEEK',
   SORT: 'SORT'
 };
@@ -86,6 +87,13 @@ export function refresh() {
   };
 }
 
+export function setTeam(team) {
+  return {
+    type: ActionTypes.SET_TEAM,
+    team
+  };
+}
+
 export function loadPullRequests(showLoading = false) {
   return (dispatch, getState) => {
     const { sortOptions } = getState();
@@ -103,6 +111,20 @@ export function loadPullRequests(showLoading = false) {
       setTimeout(() => dispatch(loadPullRequests(false)), 10000);
     }).catch(() => {
       dispatch(setError('Failed to load pull requests. Double check that all your repos exist!'));
+    });
+  };
+}
+
+export function loadTeam() {
+  return (dispatch) => {
+    dispatch({ type: ActionTypes.START_LOADING });
+
+    return axios.get(`/teamMembers?token=${localStorage.getItem('token')}`).then(response => {
+      console.log(response.data);
+      dispatch(setTeam(response.data.team));
+    }).catch((e) => {
+      console.log(e);
+      dispatch(setError('Failed to load team'));
     });
   };
 }

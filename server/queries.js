@@ -79,3 +79,20 @@ exports.openPullRequests = `
     }
   }
 `;
+
+exports.team = `
+  query {
+    organization(login: "versus-systems") {
+      members(first: 100) {
+        edges {
+          node {
+            name
+            id
+            login
+            url
+          }
+        }
+      }
+    }
+  }
+`;

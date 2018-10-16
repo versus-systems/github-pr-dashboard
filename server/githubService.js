@@ -52,7 +52,6 @@ exports.loadPullRequests = function loadPullRequests() {
     .then((pullRequests) =>
       pullRequests.map(pr => {
         const status = pr.commits.nodes[0].commit.status.state.toLowerCase();
-
         return {
           ...pr,
           approvals: pr.approvals.totalCount,
@@ -64,4 +63,10 @@ exports.loadPullRequests = function loadPullRequests() {
         };
       })
     );
+};
+
+exports.loadTeam = function loadTeam() {
+  return graphCall(queries.team)
+    .then((result) => result.data.data.organization.members.edges)
+    .catch((e) => console.log(e));
 };

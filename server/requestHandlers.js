@@ -27,3 +27,13 @@ exports.getPullRequests = function getPullRequests(req, res) {
     });
   });
 };
+
+exports.getTeam = function getTeam(req, res) {
+  githubService.loadTeam().then(team => {
+    res.status(200).json({ team });
+  }).catch(error => {
+    res.status(500).json({
+      error: `Failed to load pull requests: ${error.message}`
+    });
+  });
+};
