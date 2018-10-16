@@ -1,9 +1,9 @@
 import React from 'react';
-import '../../images/405.svg';
+import '../../images/logo.png';
 
 const StatsPanel = ({ pullRequests, timeToClose, mergedThisWeek }) => (
   <div className="stats-panel">
-    <img src="images/405.svg" alt="Repository" />
+    <img src="images/logo.png" alt="Repository" />
 
     <div className="stat-holder">
       <div className="stat">
