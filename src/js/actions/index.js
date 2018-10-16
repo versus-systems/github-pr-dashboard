@@ -13,6 +13,7 @@ export const ActionTypes = {
   SET_REPOS: 'SET_REPOS',
   SET_TITLE: 'SET_TITLE',
   SET_TEAM: 'SET_TEAM',
+  SET_TEAM_MEMBER: 'SET_TEAM_MEMBER',
   SET_MERGED_THIS_WEEK: 'SET_MERGED_THIS_WEEK',
   SORT: 'SORT'
 };
@@ -94,6 +95,13 @@ export function setTeam(team) {
   };
 }
 
+export function setTeamMember(teamMember) {
+  return {
+    type: ActionTypes.SET_TEAM_MEMBER,
+    teamMember
+  };
+}
+
 export function loadPullRequests(showLoading = false) {
   return (dispatch, getState) => {
     const { sortOptions } = getState();
@@ -120,11 +128,21 @@ export function loadTeam() {
     dispatch({ type: ActionTypes.START_LOADING });
 
     return axios.get(`/teamMembers?token=${localStorage.getItem('token')}`).then(response => {
-      console.log(response.data);
       dispatch(setTeam(response.data.team));
     }).catch((e) => {
-      console.log(e);
-      dispatch(setError('Failed to load team'));
+      dispatch(setError(`Failed to load team: ${e}`));
+    });
+  };
+}
+
+export function loadTeamMember(username) {
+  return (dispatch) => {
+    dispatch({ type: ActionTypes.START_LOADING });
+
+    return axios.get(`/teamMember?id=${username}&token=${localStorage.getItem('token')}`).then(response => {
+      dispatch(setTeamMember(response.data));
+    }).catch((e) => {
+      dispatch(setError(`Failed to load team member: ${e}`));
     });
   };
 }

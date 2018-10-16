@@ -70,3 +70,9 @@ exports.loadTeam = function loadTeam() {
     .then((result) => result.data.data.organization.members.edges)
     .catch((e) => console.log(e));
 };
+
+exports.loadTeamMemberStats = function loadTeamMemberStats(login) {
+  return graphCall(queries.teamMember(login))
+    .then((result) => result.data.data)
+    .catch((e) => console.log(e));
+}

@@ -12,6 +12,7 @@ import {
   timeToCloseReducer,
   mergedThisWeekReducer,
   teamReducer,
+  teamMemberReducer,
 } from '../reducers';
 
 export default function configureStore() {
@@ -26,6 +27,7 @@ export default function configureStore() {
     timeToClose: timeToCloseReducer,
     mergedThisWeek: mergedThisWeekReducer,
     team: teamReducer,
+    teamMember: teamMemberReducer,
   });
 
   return createStore(reducer, {}, compose(

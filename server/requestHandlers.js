@@ -33,7 +33,17 @@ exports.getTeam = function getTeam(req, res) {
     res.status(200).json({ team });
   }).catch(error => {
     res.status(500).json({
-      error: `Failed to load pull requests: ${error.message}`
+      error: `Failed to load team: ${error.message}`
+    });
+  });
+};
+
+exports.getTeamMemberStats = function getTeamMemberStats(req, res) {
+  githubService.loadTeamMemberStats(req.query.id).then(stats => {
+    res.status(200).json({ stats });
+  }).catch(error => {
+    res.status(500).json({
+      error: `Failed to load team member: ${error.message}`
     });
   });
 };

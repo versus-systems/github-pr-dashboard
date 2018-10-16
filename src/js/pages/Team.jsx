@@ -1,6 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Login from '../components/Login';
 import { loadTeam } from '../actions';
@@ -15,16 +16,20 @@ class Team extends React.Component {
   renderTeamMember(member) {
     if (member.node.name) {
       return (
-        <div>
-          {member.node.login} ({member.node.name})
-        </div>
+        <li>
+          <Link key={member.node.login} to={`/team/${member.node.login}`}>
+            {member.node.login} ({member.node.name})
+          </Link>
+        </li>
       );
     }
 
     return (
-      <div>
-        {member.node.login}
-      </div>
+      <li>
+        <Link key={member.node.login} to={`/team/${member.node.login}`}>
+          {member.node.login}
+        </Link>
+      </li>
     );
   }
 
@@ -42,9 +47,11 @@ class Team extends React.Component {
     }
 
     return (
-      <div className="container">
-        <h1>Teammm</h1>
+      <div className="center-container">
+        <h1>Team</h1>
+        <ul>
         {team && team.map((member) => this.renderTeamMember(member))}
+        </ul>
       </div>
     );
   }

@@ -1,3 +1,5 @@
+const time = require('./time');
+
 exports.closedPullRequests = `
   query {
     repositoryOwner(login: "versus-systems") {
@@ -96,3 +98,51 @@ exports.team = `
     }
   }
 `;
+
+exports.teamMember = (login) => {
+  const date = time.threeMonthsAgo();
+
+  return (`
+    query {
+      requested: search(query: "type:pr review-requested:${login} created:>${date}", type: ISSUE, first: 10) {
+        issueCount
+        pageInfo {
+          endCursor
+          startCursor
+        }
+        edges {
+          node {
+            ... on PullRequest {
+              repository {
+                nameWithOwner
+              }
+              createdAt
+              number
+              url
+            }
+          }
+        }
+      }
+
+      reviewed: search(query: "type:pr reviewed-by:${login} created:>${date}", type: ISSUE, first: 10) {
+        issueCount
+        pageInfo {
+          endCursor
+          startCursor
+        }
+        edges {
+          node {
+            ... on PullRequest {
+              repository {
+                nameWithOwner
+              }
+              createdAt
+              number
+              url
+            }
+          }
+        }
+      }
+    }
+  `);
+};

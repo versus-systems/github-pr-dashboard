@@ -6,6 +6,7 @@ export function loadingReducer(state = false, action) {
       return true;
     case ActionTypes.ADD_PULL_REQUESTS:
     case ActionTypes.SET_TEAM:
+    case ActionTypes.SET_TEAM_MEMBER:
       return false;
     default:
       return state;
@@ -34,6 +35,15 @@ export function teamReducer(state = [], action) {
   switch (action.type) {
     case ActionTypes.SET_TEAM:
       return action.team;
+    default:
+      return state;
+  }
+}
+
+export function teamMemberReducer(state = {}, action) {
+  switch (action.type) {
+    case ActionTypes.SET_TEAM_MEMBER:
+      return action.teamMember;
     default:
       return state;
   }

@@ -9,6 +9,7 @@ module.exports = {
 
   output: {
     path: './dist',
+    publicPath: '/',
     filename: 'bundle.js'
   },
 

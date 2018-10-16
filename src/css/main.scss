@@ -329,6 +329,30 @@ button {
   }
 }
 
+.center-container {
+  width: 800px;
+  margin: auto;
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0 30px 0;
+
+    li {
+      margin-bottom: 10px;
+    }
+  }
+
+  h4 {
+    margin-bottom: 0px;
+  }
+
+  .date {
+    width: 120px;
+    display: inline-block;
+  }
+}
+
 #edit-dashboard {
   input {
     font-size: 1em;
