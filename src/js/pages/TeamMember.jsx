@@ -50,7 +50,7 @@ class TeamMember extends React.Component {
           }
         </ul>
 
-        <h3>Neglected (last 3 months): {teamMember.stats.requested.issueCount}</h3>
+        <h3>Skipped (last 3 months): {teamMember.stats.requested.issueCount}</h3>
         <h4>Last 10</h4>
         <ul>
           {

@@ -50,7 +50,10 @@ class Team extends React.Component {
       <div className="center-container">
         <h1>Team</h1>
         <ul>
-        {team && team.map((member) => this.renderTeamMember(member))}
+        {team && team
+          .sort((m1, m2) => (m1.node.login.toLowerCase() < m2.node.login.toLowerCase() ? -1 : 1))
+          .map((member) => this.renderTeamMember(member))
+        }
         </ul>
       </div>
     );
