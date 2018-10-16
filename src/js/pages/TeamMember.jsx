@@ -69,6 +69,7 @@ TeamMember.propTypes = {
   teamMember: React.PropTypes.object.isRequired,
   loading: React.PropTypes.bool.isRequired,
   actions: React.PropTypes.object.isRequired,
+  match: React.PropTypes.object.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
