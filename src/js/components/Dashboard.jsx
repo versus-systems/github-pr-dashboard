@@ -39,7 +39,13 @@ class Main extends React.Component {
   }
 
   renderBody() {
-    const { error, pullRequests, timeToClose, mergedThisWeek } = this.props;
+    const {
+      error,
+      pullRequests,
+      topCommenters,
+      timeToClose,
+      mergedThisWeek
+    } = this.props;
 
     if (error) {
       return <ErrorMessage message={this.props.error} />;
@@ -51,7 +57,7 @@ class Main extends React.Component {
         {this.renderLoading()}
         <div className="stats-panel-holder">
           <StatsPanel
-            pullRequests={pullRequests.length}
+            topCommenters={topCommenters}
             timeToClose={timeToClose}
             mergedThisWeek={mergedThisWeek}
           />
@@ -90,6 +96,7 @@ Main.propTypes = {
   loggedIn: React.PropTypes.bool.isRequired,
   loading: React.PropTypes.bool.isRequired,
   pullRequests: React.PropTypes.array.isRequired,
+  topCommenters: React.PropTypes.array.isRequired,
   repos: React.PropTypes.array.isRequired,
   title: React.PropTypes.string.isRequired,
   failedRepos: React.PropTypes.array.isRequired,

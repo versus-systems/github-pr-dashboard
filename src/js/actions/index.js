@@ -15,6 +15,7 @@ export const ActionTypes = {
   SET_TEAM: 'SET_TEAM',
   SET_TEAM_MEMBER: 'SET_TEAM_MEMBER',
   SET_MERGED_THIS_WEEK: 'SET_MERGED_THIS_WEEK',
+  SET_TOP_COMMENTERS: 'SET_TOP_COMMENTERS',
   SORT: 'SORT'
 };
 
@@ -43,6 +44,13 @@ export function setTitle(title) {
   return {
     type: ActionTypes.SET_TITLE,
     title
+  };
+}
+
+export function setTopCommenters(commenters) {
+  return {
+    type: ActionTypes.SET_TOP_COMMENTERS,
+    commenters
   };
 }
 
@@ -115,6 +123,7 @@ export function loadPullRequests(showLoading = false) {
       dispatch(setTitle(response.data.title || 'Pull Requests'));
       dispatch(setTimeToClose(response.data.timeToClose));
       dispatch(setMergedThisWeek(response.data.mergedThisWeek));
+      dispatch(setTopCommenters(response.data.topCommenters));
 
       setTimeout(() => dispatch(loadPullRequests(false)), 10000);
     }).catch(() => {

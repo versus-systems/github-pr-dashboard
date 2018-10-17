@@ -58,6 +58,15 @@ export function timeToCloseReducer(state = '', action) {
   }
 }
 
+export function topCommentersReducer(state = [], action) {
+  switch (action.type) {
+    case ActionTypes.SET_TOP_COMMENTERS:
+      return action.commenters.slice(0, 3).map(([name]) => name);
+    default:
+      return state;
+  }
+}
+
 export function mergedThisWeekReducer(state = 0, action) {
   switch (action.type) {
     case ActionTypes.SET_MERGED_THIS_WEEK:

@@ -13,6 +13,7 @@ import {
   mergedThisWeekReducer,
   teamReducer,
   teamMemberReducer,
+  topCommentersReducer,
 } from '../reducers';
 
 export default function configureStore() {
@@ -28,6 +29,7 @@ export default function configureStore() {
     mergedThisWeek: mergedThisWeekReducer,
     team: teamReducer,
     teamMember: teamMemberReducer,
+    topCommenters: topCommentersReducer,
   });
 
   return createStore(reducer, {}, compose(

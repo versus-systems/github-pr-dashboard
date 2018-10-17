@@ -82,6 +82,48 @@ exports.openPullRequests = `
   }
 `;
 
+exports.recentPullRequests = () => {
+  const date = time.oneWeekAgo();
+
+  return (`
+    query {
+      search(query: "org:versus-systems type:pr updated:>${date}", type: ISSUE, first: 100) {
+        issueCount
+        edges {
+          node {
+            ... on PullRequest {
+              url
+              reviews(first:100) {
+                edges {
+                  node {
+                    author {
+                      login
+                    }
+                    state
+                    body
+                    comments {
+                      totalCount
+                    }
+                  }
+                }
+              }
+              comments(first: 100) {
+                edges {
+                  node {
+                    author {
+                      login
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `);
+};
+
 exports.team = `
   query {
     organization(login: "versus-systems") {
@@ -104,7 +146,7 @@ exports.teamMember = (login) => {
 
   return (`
     query {
-      requested: search(query: "type:pr review-requested:${login} created:>${date}", type: ISSUE, first: 10) {
+      requested: search(query: "org:versus-systems type:pr review-requested:${login} created:>${date}", type: ISSUE, first: 10) {
         issueCount
         pageInfo {
           endCursor
@@ -124,7 +166,7 @@ exports.teamMember = (login) => {
         }
       }
 
-      reviewed: search(query: "type:pr reviewed-by:${login} created:>${date}", type: ISSUE, first: 10) {
+      reviewed: search(query: "org:versus-systems type:pr reviewed-by:${login} created:>${date}", type: ISSUE, first: 10) {
         issueCount
         pageInfo {
           endCursor

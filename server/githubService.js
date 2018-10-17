@@ -76,3 +76,42 @@ exports.loadTeamMemberStats = function loadTeamMemberStats(login) {
     .then((result) => result.data.data)
     .catch((e) => console.log(e));
 }
+
+exports.loadTopCommenters = function loadTopCommenters(login) {
+  return graphCall(queries.recentPullRequests())
+    .then((result) => result.data.data)
+    .then(data => {
+      const totals = {};
+      const flatData = data.search.edges.map(({ node }) => ({
+        reviews: node.reviews.edges.map(({ node }) => node),
+        comments: node.comments.edges.map(({ node }) => node),
+        body: node.body,
+        state: node.state,
+      }));
+
+      flatData.forEach((data) => {
+        data.reviews.forEach((review) => {
+          const login = review.author.login;
+          const decision = ['APPROVED', 'CHANGES_REQUESTED'].includes(review.state) ? 1 : 0;
+          const initialComment = !!review.body.length ? 1 : 0;
+          const additionalComments = review.comments.totalCount;
+          const total = (decision + initialComment + additionalComments) || 1;
+
+          totals[login] = totals[login] || 0;
+          totals[login] += total;
+        });
+
+        data.comments.forEach((comment) => {
+          const login = comment.author.login;
+          totals[login] = totals[login] || 0;
+          totals[login] += 1;
+        });
+      });
+
+      const totalsArray = Object.keys(totals)
+                                .map((key) => [key, totals[key]])
+                                .sort(([name, total], [name2, total2]) => total < total2 ? 1 : -1);
+      return totalsArray;
+    })
+    .catch((e) => console.log(e));
+}

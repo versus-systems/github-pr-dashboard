@@ -13,12 +13,15 @@ exports.getPullRequests = function getPullRequests(req, res) {
   const config = configManager.getConfig();
   githubService.loadPullRequests().then(prs => {
     githubService.getPastWeekData().then(({ merged, averageTime }) => {
-      res.status(200).json({
-        pullRequests: prs,
-        timeToClose: averageTime,
-        mergedThisWeek: merged,
-        repos: config.repos,
-        title: 'The 405'
+      githubService.loadTopCommenters().then((commenters) => {
+        res.status(200).json({
+          pullRequests: prs,
+          timeToClose: averageTime,
+          mergedThisWeek: merged,
+          repos: config.repos,
+          title: 'The 405',
+          topCommenters: commenters,
+        });
       });
     });
   }).catch(error => {
