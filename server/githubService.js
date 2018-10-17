@@ -1,4 +1,5 @@
 const axios = require('axios');
+const moment = require('moment');
 const queries = require('./queries');
 const time = require('./time');
 
@@ -82,30 +83,38 @@ exports.loadTopCommenters = function loadTopCommenters(login) {
     .then((result) => result.data.data)
     .then(data => {
       const totals = {};
+      const oneWeekAgo = moment().subtract(7, 'days');
       const flatData = data.search.edges.map(({ node }) => ({
         reviews: node.reviews.edges.map(({ node }) => node),
         comments: node.comments.edges.map(({ node }) => node),
         body: node.body,
         state: node.state,
+        createdAt: node.createdAt,
       }));
 
       flatData.forEach((data) => {
-        data.reviews.forEach((review) => {
-          const login = review.author.login;
-          const decision = ['APPROVED', 'CHANGES_REQUESTED'].includes(review.state) ? 1 : 0;
-          const initialComment = !!review.body.length ? 1 : 0;
-          const additionalComments = review.comments.totalCount;
-          const total = (decision + initialComment + additionalComments) || 1;
+        data
+          .reviews
+          .filter(({ createdAt }) => moment(createdAt).isAfter(oneWeekAgo))
+          .forEach((review) => {
+            const login = review.author.login;
+            const decision = ['APPROVED', 'CHANGES_REQUESTED'].includes(review.state) ? 1 : 0;
+            const initialComment = !!review.body.length ? 1 : 0;
+            const additionalComments = review.comments.totalCount;
+            const total = (decision + initialComment + additionalComments) || 1;
 
-          totals[login] = totals[login] || 0;
-          totals[login] += total;
-        });
+            totals[login] = totals[login] || 0;
+            totals[login] += total;
+          });
 
-        data.comments.forEach((comment) => {
-          const login = comment.author.login;
-          totals[login] = totals[login] || 0;
-          totals[login] += 1;
-        });
+        data
+          .comments
+          .filter(({ createdAt }) => moment(createdAt).isAfter(oneWeekAgo))
+          .forEach((comment) => {
+            const login = comment.author.login;
+            totals[login] = totals[login] || 0;
+            totals[login] += 1;
+          });
       });
 
       const totalsArray = Object.keys(totals)

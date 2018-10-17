@@ -96,6 +96,7 @@ exports.recentPullRequests = () => {
               reviews(first:100) {
                 edges {
                   node {
+                    createdAt
                     author {
                       login
                     }
@@ -110,6 +111,7 @@ exports.recentPullRequests = () => {
               comments(first: 100) {
                 edges {
                   node {
+                    createdAt
                     author {
                       login
                     }
