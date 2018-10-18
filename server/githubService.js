@@ -52,7 +52,9 @@ exports.loadPullRequests = function loadPullRequests() {
     .then((result) => extractPullRequests(result))
     .then((pullRequests) =>
       pullRequests.map(pr => {
-        const status = pr.commits.nodes[0].commit.status.state.toLowerCase();
+        const commitStatus = pr.commits.nodes[0].commit.status;
+        const status = commitStatus ? commitStatus.state.toLowerCase() : "";
+
         return {
           ...pr,
           approvals: pr.approvals.totalCount,
