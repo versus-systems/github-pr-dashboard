@@ -118,6 +118,7 @@ export function loadPullRequests(showLoading = false) {
     }
 
     return axios.get(`/pulls?token=${localStorage.getItem('token')}`).then(response => {
+      dispatch(setError(''));
       dispatch(addPullRequests(response.data.pullRequests, sortOptions));
       dispatch(setRepos(response.data.repos));
       dispatch(setTitle(response.data.title || 'Pull Requests'));
@@ -128,6 +129,7 @@ export function loadPullRequests(showLoading = false) {
       setTimeout(() => dispatch(loadPullRequests(false)), 10000);
     }).catch(() => {
       dispatch(setError('Failed to load pull requests. Double check that all your repos exist!'));
+      setTimeout(() => dispatch(loadPullRequests(false)), 10000);
     });
   };
 }
