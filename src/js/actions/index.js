@@ -150,11 +150,12 @@ export function loadTeamMember(username) {
   return (dispatch) => {
     dispatch({ type: ActionTypes.START_LOADING });
 
-    return axios.get(`/teamMember?id=${username}&token=${localStorage.getItem('token')}`).then(response => {
-      dispatch(setTeamMember(response.data));
-    }).catch((e) => {
-      dispatch(setError(`Failed to load team member: ${e}`));
-    });
+    return axios.get(`/teamMember?id=${username}&token=${localStorage.getItem('token')}`)
+      .then(response => {
+        dispatch(setTeamMember(response.data));
+      }).catch((e) => {
+        dispatch(setError(`Failed to load team member: ${e}`));
+      });
   };
 }
 
