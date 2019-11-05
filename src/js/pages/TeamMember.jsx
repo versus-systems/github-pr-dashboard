@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -65,11 +66,11 @@ class TeamMember extends React.Component {
 }
 
 TeamMember.propTypes = {
-  loggedIn: React.PropTypes.bool.isRequired,
-  teamMember: React.PropTypes.object.isRequired,
-  loading: React.PropTypes.bool.isRequired,
-  actions: React.PropTypes.object.isRequired,
-  match: React.PropTypes.object.isRequired,
+  loggedIn: PropTypes.bool.isRequired,
+  teamMember: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  actions: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import UserPhoto from './UserPhoto';
 import { Status } from './Status';
@@ -79,5 +80,5 @@ export default class PullRequest extends React.Component {
 }
 
 PullRequest.propTypes = {
-  pullRequest: React.PropTypes.object.isRequired
+  pullRequest: PropTypes.object.isRequired
 };

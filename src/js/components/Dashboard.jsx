@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { CSSTransitionGroup } from 'react-transition-group';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -6,6 +7,7 @@ import PullRequest from './PullRequest';
 import LoadingIndicator from './LoadingIndicator';
 import ErrorMessage from './ErrorMessage';
 import StatsPanel from './StatsPanel';
+import Metrics from './Metrics';
 import Login from './Login';
 import { loadPullRequests } from '../actions';
 
@@ -93,17 +95,17 @@ class Main extends React.Component {
 }
 
 Main.propTypes = {
-  loggedIn: React.PropTypes.bool.isRequired,
-  loading: React.PropTypes.bool.isRequired,
-  pullRequests: React.PropTypes.array.isRequired,
-  topCommenters: React.PropTypes.array.isRequired,
-  repos: React.PropTypes.array.isRequired,
-  title: React.PropTypes.string.isRequired,
-  failedRepos: React.PropTypes.array.isRequired,
-  error: React.PropTypes.string.isRequired,
-  timeToClose: React.PropTypes.string.isRequired,
-  mergedThisWeek: React.PropTypes.number.isRequired,
-  actions: React.PropTypes.object.isRequired,
+  loggedIn: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
+  pullRequests: PropTypes.array.isRequired,
+  topCommenters: PropTypes.array.isRequired,
+  repos: PropTypes.array.isRequired,
+  title: PropTypes.string.isRequired,
+  failedRepos: PropTypes.array.isRequired,
+  error: PropTypes.string.isRequired,
+  timeToClose: PropTypes.string.isRequired,
+  mergedThisWeek: PropTypes.number.isRequired,
+  actions: PropTypes.object.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

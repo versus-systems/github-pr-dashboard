@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { login } from '../actions';
@@ -40,13 +41,13 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  loading: React.PropTypes.bool.isRequired,
-  pullRequests: React.PropTypes.array.isRequired,
-  repos: React.PropTypes.array.isRequired,
-  title: React.PropTypes.string.isRequired,
-  failedRepos: React.PropTypes.array.isRequired,
-  error: React.PropTypes.string.isRequired,
-  actions: React.PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  pullRequests: PropTypes.array.isRequired,
+  repos: PropTypes.array.isRequired,
+  title: PropTypes.string.isRequired,
+  failedRepos: PropTypes.array.isRequired,
+  error: PropTypes.string.isRequired,
+  actions: PropTypes.object.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

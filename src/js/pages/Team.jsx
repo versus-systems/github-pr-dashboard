@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -61,10 +62,10 @@ class Team extends React.Component {
 }
 
 Team.propTypes = {
-  loggedIn: React.PropTypes.bool.isRequired,
-  team: React.PropTypes.bool.isRequired,
-  loading: React.PropTypes.bool.isRequired,
-  actions: React.PropTypes.object.isRequired,
+  loggedIn: PropTypes.bool.isRequired,
+  team: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
+  actions: PropTypes.object.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

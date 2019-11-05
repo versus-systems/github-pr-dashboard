@@ -23,6 +23,12 @@ app.post('/login', requestHandlers.login);
 app.get('/pulls', isAuthenticated, requestHandlers.getPullRequests);
 app.get('/teamMembers', isAuthenticated, requestHandlers.getTeam);
 app.get('/teamMember', isAuthenticated, requestHandlers.getTeamMemberStats);
+
+app.get('/bugsFixed', isAuthenticated, requestHandlers.getBugsFixed);
+app.get('/bugsCreated', isAuthenticated, requestHandlers.getBugsCreated);
+app.get('/blockingStories', isAuthenticated, requestHandlers.getBlockingStories);
+app.get('/leadTime', isAuthenticated, requestHandlers.getLeadTime);
+
 app.get('*', (req, res) => {
   res.sendFile(path.resolve('dist', 'index.html'));
 });

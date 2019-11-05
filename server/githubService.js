@@ -65,7 +65,7 @@ exports.loadPullRequests = function loadPullRequests() {
           },
         };
       })
-    );
+    ).catch(e => console.log(e));
 };
 
 exports.loadTeam = function loadTeam() {

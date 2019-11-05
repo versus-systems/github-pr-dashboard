@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import '../../images/405.svg';
 
 const StatsPanel = ({ timeToClose, mergedThisWeek, topCommenters }) => (
@@ -39,10 +40,10 @@ const StatsPanel = ({ timeToClose, mergedThisWeek, topCommenters }) => (
 );
 
 StatsPanel.propTypes = {
-  topCommenters: React.PropTypes.array.isRequired,
-  pullRequests: React.PropTypes.array.isRequired,
-  timeToClose: React.PropTypes.number.isRequired,
-  mergedThisWeek: React.PropTypes.number.isRequired,
+  topCommenters: PropTypes.array.isRequired,
+  pullRequests: PropTypes.array.isRequired,
+  timeToClose: PropTypes.number.isRequired,
+  mergedThisWeek: PropTypes.number.isRequired,
 };
 
 export default StatsPanel;

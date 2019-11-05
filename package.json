@@ -53,13 +53,14 @@
     "express": "^4.15.2",
     "lodash": "^4.17.4",
     "moment": "^2.13.0",
-    "react": "^15.1.0",
-    "react-dom": "^15.1.0",
+    "react": "16.11.0",
+    "react-dom": "16.11.0",
     "react-redux": "^4.4.5",
     "react-router-dom": "^4.0.0",
     "react-transition-group": "^1.2.0",
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "styled-components": "^4.4.1"
   }
 }

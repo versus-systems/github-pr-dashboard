@@ -1,5 +1,6 @@
 const configManager = require('./configManager');
 const githubService = require('./githubService');
+const clubhouseService = require('./clubhouseService');
 
 exports.login = function login(req, res) {
   if (req.body.password === process.env.LOGIN_PASSWORD) {
@@ -47,6 +48,46 @@ exports.getTeamMemberStats = function getTeamMemberStats(req, res) {
   }).catch(error => {
     res.status(500).json({
       error: `Failed to load team member: ${error.message}`
+    });
+  });
+};
+
+exports.getBugsFixed = function getBugsFixed(req, res) {
+  clubhouseService.getBugsFixed().then(count => {
+    res.status(200).json({ count });
+  }).catch(error => {
+    res.status(500).json({
+      error: `Failed to load fixed count: ${error.message}`
+    });
+  });
+};
+
+exports.getBugsCreated = function getBugsCreated(req, res) {
+  clubhouseService.getBugsCreated().then(count => {
+    res.status(200).json({ count });
+  }).catch(error => {
+    res.status(500).json({
+      error: `Failed to load bugs created count: ${error.message}`
+    });
+  });
+};
+
+exports.getBlockingStories = function getBlockingStories(req, res) {
+  clubhouseService.getBlockingStories().then(count => {
+    res.status(200).json({ count });
+  }).catch(error => {
+    res.status(500).json({
+      error: `Failed to load blocking stories: ${error.message}`
+    });
+  });
+};
+
+exports.getLeadTime = function getLeadTime(req, res) {
+  clubhouseService.getLeadTime().then(count => {
+    res.status(200).json({ count });
+  }).catch(error => {
+    res.status(500).json({
+      error: `Failed to load lead time: ${error.message}`
     });
   });
 };
