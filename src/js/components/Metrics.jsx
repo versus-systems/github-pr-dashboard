@@ -1,18 +1,21 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import { VictoryPie } from 'victory';
+import Gauge from 'react-svg-gauge';
 import axios from 'axios';
 import Card from './Card';
 import Metric from './Metric';
+import { Row, Column } from './styles';
 
-class Main extends React.Component {
+class Metrics extends React.Component {
   constructor() {
     super();
 
     this.state = {
       bugsFixed: null,
       bugsCreated: null,
-      leadTime: null,
-      blockingStories: [],
+      leadTime: { days: 0, hours: 0 },
+      cycleTime: { days: 0, hours: 0 },
     };
   }
 
@@ -27,38 +30,73 @@ class Main extends React.Component {
 
     axios.get(`/leadTime?token=${localStorage.getItem('token')}`).then(response => {
       this.setState({
-        leadTime: `${response.data.count.days} days ${response.data.count.hours} hours`
+        leadTime: response.data.leadTime,
+        cycleTime: response.data.cycleTime,
       });
-    });
-
-    axios.get(`/blockingStories?token=${localStorage.getItem('token')}`).then(response => {
-      this.setState({ blockingStories: response });
     });
   }
 
   render() {
-    const { bugsFixed, bugsCreated, leadTime, blockingStories } = this.state;
+    const { bugsFixed, bugsCreated, leadTime, cycleTime } = this.state;
 
     return (
-      <div>
-        <Card title="Bugs Fixed">
-          <Metric currentValue={bugsFixed} />
-        </Card>
+      <Column style={{ width: '100%' }}>
+        <Row>
+          <Card title="Recent Deployments" box>
+            <Metric currentValue={789} />
+          </Card>
 
-        <Card title="Bugs Fixed">
-          <Metric currentValue={bugsCreated} benchmark={30} />
-        </Card>
+          <Card title="Bugs" box>
+            <VictoryPie
+              style={{ marginTop: -34 }}
+              innerRadius={50}
+              colorScale={['green', 'red']}
+              data={[
+                { x: 'Fixed', y: bugsFixed, color: 'green' },
+                { x: 'Created', y: bugsCreated, color: 'red' },
+              ]}
+              width={(window.innerWidth / 4) - 30}
+              height={(window.innerHeight / 2) - 60}
+            />
+          </Card>
+        </Row>
 
-        <Card title="Lead Time">
-          <Metric currentValue={leadTime} goal={"3 days"} />
-        </Card>
+        <Row>
+          <Card title="Lead Time" box>
+            <Gauge
+              value={leadTime.days}
+              min={0}
+              max={15}
+              label=""
+              valueFormatter={val => `${val} days`}
+              minMaxLabelStyle={{ display: 'none' }}
+              valueLabelStyle={{ fontSize: '30px' }}
+              width={(window.innerWidth / 4) - 30}
+              height={(window.innerHeight / 2) - 60}
+            />
+          </Card>
 
-        <Card title="Blocking Stories">
-          <Metric currentValue={blockingStories.length} />
-        </Card>
-      </div>
+          <Card title="Cycle Time" box>
+            <Gauge
+              value={cycleTime.days}
+              min={0}
+              max={3}
+              label=""
+              valueFormatter={val => `${val} days`}
+              minMaxLabelStyle={{ display: 'none' }}
+              valueLabelStyle={{ fontSize: '30px' }}
+              width={(window.innerWidth / 4) - 30}
+              height={(window.innerHeight / 2) - 60}
+            />
+          </Card>
+        </Row>
+      </Column>
     );
   }
 }
 
-export default Main;
+Metrics.propTypes = {
+  pullRequests: PropTypes.array,
+};
+
+export default Metrics;

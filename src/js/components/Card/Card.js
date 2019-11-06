@@ -7,8 +7,10 @@ const Card = ({
   children,
   padContent,
   titleDivider,
+  box,
+  full,
 }) => (
-  <Wrapper data-cy="metric">
+  <Wrapper box={box} full={full}>
     <Header showDivider={titleDivider}>
       <Title>{title}</Title>
     </Header>
@@ -24,6 +26,8 @@ Card.propTypes = {
   children: PropTypes.object,
   padContent: PropTypes.bool,
   titleDivider: PropTypes.bool,
+  box: PropTypes.bool,
+  full: PropTypes.bool,
 };
 
 export default Card;

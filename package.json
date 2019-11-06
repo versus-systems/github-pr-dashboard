@@ -55,12 +55,14 @@
     "moment": "^2.13.0",
     "react": "16.11.0",
     "react-dom": "16.11.0",
-    "react-redux": "^4.4.5",
+    "react-redux": "4.4.5",
     "react-router-dom": "^4.0.0",
+    "react-svg-gauge": "1.0.10",
     "react-transition-group": "^1.2.0",
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0",
     "serve-favicon": "^2.5.0",
-    "styled-components": "^4.4.1"
+    "styled-components": "4.4.1",
+    "victory": "33.1.2"
   }
 }

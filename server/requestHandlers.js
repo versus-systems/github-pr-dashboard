@@ -83,8 +83,8 @@ exports.getBlockingStories = function getBlockingStories(req, res) {
 };
 
 exports.getLeadTime = function getLeadTime(req, res) {
-  clubhouseService.getLeadTime().then(count => {
-    res.status(200).json({ count });
+  clubhouseService.getLeadTime().then(leadTimes => {
+    res.status(200).json(leadTimes);
   }).catch(error => {
     res.status(500).json({
       error: `Failed to load lead time: ${error.message}`

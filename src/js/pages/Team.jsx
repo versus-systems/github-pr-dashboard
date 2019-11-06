@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import LoadingIndicator from '../components/LoadingIndicator';
 import Login from '../components/Login';
 import { loadTeam } from '../actions';
 
@@ -42,9 +41,7 @@ class Team extends React.Component {
     }
 
     if (loading) {
-      return (
-        <LoadingIndicator />
-      );
+      return null;
     }
 
     return (

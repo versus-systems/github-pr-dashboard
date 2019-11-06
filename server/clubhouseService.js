@@ -53,21 +53,30 @@ exports.getLeadTime = () =>
     project_id: '4057',
     completed_at_start: oneWeekAgo,
   }).then((res) => {
-    const leadTimes =
+    const times =
       res.data
         .map(story => {
-          const { started_at, completed_at } = story;
+          const { created_at, started_at, completed_at } = story;
+          const create = moment(created_at);
           const start = moment(started_at);
           const end = moment(completed_at);
 
-          return weekdayDiff(start, end);
-        }).filter(diff => diff > 0);
+          return {
+            leadTime: weekdayDiff(create, end),
+            cycleTime: weekdayDiff(start, end),
+          }
+        });
 
-    const average = leadTimes.reduce((a, b) => a + b, 0) / leadTimes.length;
-    const days = Math.floor(average / 86400000);
-    const hours = Math.floor((average % 86400000) / 3600000);
+    const leadTimes = times.map(t => t.leadTime);
+    const averageLeadTime = leadTimes.reduce((a, b) => a + b, 0) / leadTimes.length;
 
-    return { days, hours };
+    const cycleTimes = times.map(t => t.cycleTime);
+    const averageCycleTime = cycleTimes.reduce((a, b) => a + b, 0) / cycleTimes.length;
+
+    return {
+      leadTime: timeUnits(averageLeadTime),
+      cycleTime: timeUnits(averageCycleTime)
+    };
   }).catch((e) => {
     console.log("Login Failed", e) // eslint-disable-line
   });
@@ -94,4 +103,11 @@ const weekdayDiff = (start, end) => {
   const newDiff = diff - (weekendDays * 86400000);
 
   return newDiff;
+};
+
+const timeUnits = (millis) => {
+  const days = Math.floor(millis / 86400000);
+  const hours = Math.floor((millis % 86400000) / 3600000);
+
+  return { days, hours };
 };

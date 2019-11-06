@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { CSSTransitionGroup } from 'react-transition-group';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Card from './Card';
 import PullRequest from './PullRequest';
-import LoadingIndicator from './LoadingIndicator';
 import ErrorMessage from './ErrorMessage';
-import StatsPanel from './StatsPanel';
 import Metrics from './Metrics';
 import Login from './Login';
+import { Row, Column, Wrapper, Header } from './styles';
 import { loadPullRequests } from '../actions';
 
 class Main extends React.Component {
@@ -18,93 +18,60 @@ class Main extends React.Component {
     }
   }
 
-  renderLoading() {
-    if (this.props.loading) {
-      return (
-        <LoadingIndicator />
-      );
-    }
-    return <div></div>;
-  }
-
-  renderFailedRepos() {
-    return (
-      <div>
-        {this.props.failedRepos.map(failedRepo =>
-          <ErrorMessage
-            key={failedRepo}
-            message={`Failed to load pull request data for ${failedRepo}.`}
-          />
-        )}
-      </div>
-    );
-  }
-
-  renderBody() {
+  render() {
     const {
       error,
       pullRequests,
-      topCommenters,
-      timeToClose,
-      mergedThisWeek
+      loggedIn,
     } = this.props;
+
+    if (!loggedIn) {
+      return <Login {...this.props} />;
+    }
 
     if (error) {
       return <ErrorMessage message={this.props.error} />;
     }
 
     return (
-      <div style={{ display: 'flex' }}>
-        {this.renderFailedRepos()}
-        {this.renderLoading()}
-        <div className="stats-panel-holder">
-          <StatsPanel
-            topCommenters={topCommenters}
-            timeToClose={timeToClose}
-            mergedThisWeek={mergedThisWeek}
-          />
-        </div>
-        <div style={{ flex: 1, marginTop: '0.25rem' }}>
-          <CSSTransitionGroup
-            transitionName="pr"
-            transitionEnterTimeout={500}
-            transitionLeaveTimeout={800}
-          >
-            {pullRequests.map(pr =>
-              <div key={pr.id}>
-                <PullRequest key={pr.id} pullRequest={pr} />
-              </div>
-            )}
-          </CSSTransitionGroup>
-        </div>
-      </div>
-    );
-  }
+      <Wrapper>
+        <Column>
+          <Header>
+            VS Engineering
+          </Header>
 
-  render() {
-    if (!this.props.loggedIn) {
-      return <Login {...this.props} />;
-    }
+          <Row>
+            <Row flex={1}>
+              <Metrics />
+            </Row>
 
-    return (
-      <div className="container">
-        {this.renderBody()}
-      </div>
+            <Row flex={1}>
+              <Card title="Pull Requests" full>
+                <CSSTransitionGroup
+                  transitionName="pr"
+                  transitionEnterTimeout={500}
+                  transitionLeaveTimeout={800}
+                >
+                  {pullRequests.map(pr =>
+                    <div key={pr.id}>
+                      <PullRequest key={pr.id} pullRequest={pr} />
+                    </div>
+                  )}
+                </CSSTransitionGroup>
+              </Card>
+            </Row>
+          </Row>
+        </Column>
+      </Wrapper>
     );
   }
 }
 
 Main.propTypes = {
   loggedIn: PropTypes.bool.isRequired,
-  loading: PropTypes.bool.isRequired,
   pullRequests: PropTypes.array.isRequired,
-  topCommenters: PropTypes.array.isRequired,
-  repos: PropTypes.array.isRequired,
-  title: PropTypes.string.isRequired,
-  failedRepos: PropTypes.array.isRequired,
   error: PropTypes.string.isRequired,
   timeToClose: PropTypes.string.isRequired,
-  mergedThisWeek: PropTypes.number.isRequired,
   actions: PropTypes.object.isRequired,
 };
 
