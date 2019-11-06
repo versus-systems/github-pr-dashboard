@@ -17,8 +17,10 @@ export const Wrapper = styled.div`
 `;
 
 export const Header = styled.div`
-  text-align: center;
   width: 100%;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
   font-size: 32px;
   font-weight: bold;
   padding-bottom: 10px;

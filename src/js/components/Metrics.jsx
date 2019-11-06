@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { VictoryPie } from 'victory';
-import Gauge from 'react-svg-gauge';
 import axios from 'axios';
+import BugChart from './BugChart';
+import Gauge from './Gauge';
 import Card from './Card';
-import Metric from './Metric';
+import { Value, getContentSize } from './Card/styles';
 import { Row, Column } from './styles';
 
 class Metrics extends React.Component {
@@ -38,25 +38,23 @@ class Metrics extends React.Component {
 
   render() {
     const { bugsFixed, bugsCreated, leadTime, cycleTime } = this.state;
+    const { height, width } = getContentSize();
 
     return (
       <Column style={{ width: '100%' }}>
         <Row>
           <Card title="Recent Deployments" box>
-            <Metric currentValue={789} />
+            <Value>
+              788
+            </Value>
           </Card>
 
           <Card title="Bugs" box>
-            <VictoryPie
-              style={{ marginTop: -34 }}
-              innerRadius={50}
-              colorScale={['green', 'red']}
-              data={[
-                { x: 'Fixed', y: bugsFixed, color: 'green' },
-                { x: 'Created', y: bugsCreated, color: 'red' },
-              ]}
-              width={(window.innerWidth / 4) - 30}
-              height={(window.innerHeight / 2) - 60}
+            <BugChart
+              bugsFixed={bugsFixed}
+              bugsCreated={bugsCreated}
+              height={height}
+              width={width}
             />
           </Card>
         </Row>
@@ -67,12 +65,8 @@ class Metrics extends React.Component {
               value={leadTime.days}
               min={0}
               max={15}
-              label=""
-              valueFormatter={val => `${val} days`}
-              minMaxLabelStyle={{ display: 'none' }}
-              valueLabelStyle={{ fontSize: '30px' }}
-              width={(window.innerWidth / 4) - 30}
-              height={(window.innerHeight / 2) - 60}
+              height={height}
+              width={width}
             />
           </Card>
 
@@ -81,12 +75,8 @@ class Metrics extends React.Component {
               value={cycleTime.days}
               min={0}
               max={3}
-              label=""
-              valueFormatter={val => `${val} days`}
-              minMaxLabelStyle={{ display: 'none' }}
-              valueLabelStyle={{ fontSize: '30px' }}
-              width={(window.innerWidth / 4) - 30}
-              height={(window.innerHeight / 2) - 60}
+              height={height}
+              width={width}
             />
           </Card>
         </Row>

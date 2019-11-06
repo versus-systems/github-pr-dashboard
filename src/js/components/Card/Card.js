@@ -1,18 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Wrapper, Title, Header, Content } from './styles';
+import { Wrapper, Header, Content } from './styles';
 
 const Card = ({
   title,
   children,
   padContent,
-  titleDivider,
   box,
   full,
 }) => (
   <Wrapper box={box} full={full}>
-    <Header showDivider={titleDivider}>
-      <Title>{title}</Title>
+    <Header>
+      {title}
     </Header>
     <Content pad={padContent}>
       {children}
