@@ -66,23 +66,27 @@ class Metrics extends React.Component {
 
         <Row>
           <Card title="Lead Time" box>
-            <Gauge
-              value={leadTime.days}
-              min={0}
-              max={15}
-              height={height}
-              width={width}
-            />
+            {leadTime.days > 0 &&
+              <Gauge
+                id="lead-gauge"
+                value={leadTime.days}
+                min={0}
+                max={20}
+                type="month"
+              />
+            }
           </Card>
 
           <Card title="Cycle Time" box>
-            <Gauge
-              value={cycleTime.days}
-              min={0}
-              max={3}
-              height={height}
-              width={width}
-            />
+            {cycleTime.days > 0 &&
+              <Gauge
+                id="cycle-gauge"
+                value={cycleTime.days}
+                min={0}
+                max={10}
+                type="sprint"
+              />
+            }
           </Card>
         </Row>
       </Column>
