@@ -28,6 +28,7 @@ app.get('/bugsFixed', isAuthenticated, requestHandlers.getBugsFixed);
 app.get('/bugsCreated', isAuthenticated, requestHandlers.getBugsCreated);
 app.get('/blockingStories', isAuthenticated, requestHandlers.getBlockingStories);
 app.get('/leadTime', isAuthenticated, requestHandlers.getLeadTime);
+app.get('/recentDeployments', isAuthenticated, requestHandlers.getRecentDeployments);
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve('dist', 'index.html'));

@@ -1,6 +1,12 @@
+const mongoose = require('mongoose');
 const configManager = require('./configManager');
 const githubService = require('./githubService');
 const clubhouseService = require('./clubhouseService');
+const Deployment = require('./schemas/deploymentSchema');
+
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
+mongoose.connection.on('error', console.error.bind(console, 'Mongo connection error:')); // eslint-disable-line
+mongoose.connection.once('open', () => console.log('Mongo connected!')); // eslint-disable-line
 
 exports.login = function login(req, res) {
   if (req.body.password === process.env.LOGIN_PASSWORD) {
@@ -85,6 +91,16 @@ exports.getBlockingStories = function getBlockingStories(req, res) {
 exports.getLeadTime = function getLeadTime(req, res) {
   clubhouseService.getLeadTime().then(leadTimes => {
     res.status(200).json(leadTimes);
+  }).catch(error => {
+    res.status(500).json({
+      error: `Failed to load lead time: ${error.message}`
+    });
+  });
+};
+
+exports.getRecentDeployments = function getRecentDeployments(req, res) {
+  Deployment.recent().then(deployments => {
+    res.status(200).json({ deployments });
   }).catch(error => {
     res.status(500).json({
       error: `Failed to load lead time: ${error.message}`

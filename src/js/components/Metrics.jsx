@@ -14,6 +14,7 @@ class Metrics extends React.Component {
     this.state = {
       bugsFixed: null,
       bugsCreated: null,
+      deployments: 0,
       leadTime: { days: 0, hours: 0 },
       cycleTime: { days: 0, hours: 0 },
     };
@@ -34,10 +35,14 @@ class Metrics extends React.Component {
         cycleTime: response.data.cycleTime,
       });
     });
+
+    axios.get(`/recentDeployments?token=${localStorage.getItem('token')}`).then(response => {
+      this.setState({ deployments: response.data.deployments.length });
+    });
   }
 
   render() {
-    const { bugsFixed, bugsCreated, leadTime, cycleTime } = this.state;
+    const { bugsFixed, bugsCreated, leadTime, cycleTime, deployments } = this.state;
     const { height, width } = getContentSize();
 
     return (
@@ -45,7 +50,7 @@ class Metrics extends React.Component {
         <Row>
           <Card title="Recent Deployments" box>
             <Value>
-              788
+              {deployments}
             </Value>
           </Card>
 
