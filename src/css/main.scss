@@ -366,6 +366,15 @@ button {
   }
 }
 
+#bugs {
+  svg {
+    background-image: url("/images/bug.png");
+    background-size: 30%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
 #edit-dashboard {
   input {
     font-size: 1em;

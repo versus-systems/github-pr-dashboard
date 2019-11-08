@@ -54,7 +54,7 @@ class Metrics extends React.Component {
             </Value>
           </Card>
 
-          <Card title="Bugs" box>
+          <Card id="bugs" title="Bugs" box>
             <BugChart
               bugsFixed={bugsFixed}
               bugsCreated={bugsCreated}

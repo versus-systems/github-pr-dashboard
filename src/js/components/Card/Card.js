@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { Wrapper, Header, Content } from './styles';
 
 const Card = ({
+  id,
   title,
   children,
   padContent,
   box,
   full,
 }) => (
-  <Wrapper box={box} full={full}>
+  <Wrapper id={id} box={box} full={full}>
     <Header>
       {title}
     </Header>
@@ -20,6 +21,7 @@ const Card = ({
 );
 
 Card.propTypes = {
+  id: PropTypes.string,
   hint: PropTypes.string,
   title: PropTypes.string,
   children: PropTypes.object,

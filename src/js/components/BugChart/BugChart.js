@@ -1,27 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { VictoryPie } from 'victory';
+import ReactMinimalPieChart from 'react-minimal-pie-chart';
 
-const BugChart = ({ bugsFixed, bugsCreated, height, width }) => (
-  <VictoryPie
-    style={{
-      parent: {
-        marginTop: -30,
-      },
-      labels: {
-        color: 'white',
-      }
-    }}
-    innerRadius={20}
-    colorScale={['green', 'red']}
+import '../../../images/bug.png';
+
+const BugChart = ({ bugsFixed, bugsCreated /* , height, width*/ }) => (
+  <ReactMinimalPieChart
+    animate={false}
+    animationDuration={500}
+    animationEasing="ease-out"
+    cx={50}
+    cy={50}
     data={[
-      { x: bugsFixed, y: bugsFixed, color: 'green' },
-      { x: bugsCreated, y: bugsCreated, color: 'red' },
+      {
+        color: '#d0021b',
+        title: 'Bugs Created',
+        value: bugsCreated
+      },
+      {
+        color: '#21a12e',
+        title: 'Bugs Fixed',
+        value: bugsFixed
+      },
     ]}
-    width={width}
-    height={height + 50}
-    padAngle={3}
-    labelRadius={({ innerRadius, radius }) => (innerRadius + radius) / 2}
+    id="bug-chart"
+    label={false}
+    labelPosition={50}
+    lengthAngle={360}
+    lineWidth={30}
+    onClick={undefined}
+    onMouseOut={undefined}
+    onMouseOver={undefined}
+    paddingAngle={0}
+    radius={50}
+    ratio={1}
+    rounded={false}
+    startAngle={270}
   />
 );
 
