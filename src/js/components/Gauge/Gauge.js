@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import GaugeChart from 'react-gauge-chart';
-
+import { Column } from '../styles';
 
 const monthColors = [
   '#00ff00',
@@ -39,34 +39,51 @@ const sprintColors = [
   '#ff0000',
 ];
 
-const getColors = (type, value) => {
-  const colorPatterns = type === 'month' ? monthColors : sprintColors;
+const Gauge = ({ id, value, max, type, description }) => {
+  if (!value) {
+    return null;
+  }
 
-  return colorPatterns.map((color, i) => {
-    const alpha = i < value ? 'ff' : '66';
+  const colorPatterns = type === 'month' ? monthColors : sprintColors;
+  const colors = colorPatterns.map((color, i) => {
+    const alpha = i < value ? 'ff' : '33';
     return `${color}${alpha}`;
   });
+  const formattedValue = (
+    <span
+      style={{
+        color: colors[value - 1],
+        fontWeight: 'bold'
+      }}
+    >
+      {value} days
+    </span>
+  );
+
+  return (
+    <Column>
+      <GaugeChart
+        id={id}
+        arcPadding={0}
+        cornerRadius={0}
+        nrOfLevels={max}
+        colors={colors}
+        percent={value / max}
+        needleColor={'#959cb6'}
+        needleBaseColor={'#959cb6'}
+        hideText
+      />
+      {description(formattedValue)}
+    </Column>
+  );
 };
-
-
-const Gauge = ({ id, value, max, type }) => (
-  <GaugeChart
-    id={id}
-    arcPadding={0}
-    cornerRadius={0}
-    nrOfLevels={max}
-    colors={getColors(type, value)}
-    percent={value / max}
-    needleColor={'transparent'}
-    needleBaseColor={'transparent'}
-  />
-);
 
 Gauge.propTypes = {
   id: PropTypes.string,
   max: PropTypes.number,
   value: PropTypes.number,
   type: PropTypes.string,
+  description: PropTypes.function,
 };
 
 export default Gauge;

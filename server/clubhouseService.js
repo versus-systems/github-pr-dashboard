@@ -3,7 +3,7 @@ const moment = require('moment');
 const axios = require('axios');
 
 const token = process.env.CLUBHOUSE_API_TOKEN;
-const oneWeekAgo = moment().subtract(7, 'd').toISOString();
+const oneWeekAgo = moment().subtract(8, 'd').toISOString();
 
 
 exports.getBugsFixed = () =>
@@ -36,12 +36,13 @@ exports.getBlockingStories = () =>
     const engineering = res.data.find(w => w.name === 'Engineering');
     const blocking = engineering.states.find(s => s.name === 'Blocking');
 
-    axios.post(`https://api.clubhouse.io/api/v3/stories/search?token=${token}`, {
+    return axios.post(`https://api.clubhouse.io/api/v3/stories/search?token=${token}`, {
       workflow_state_id: blocking.id,
-    }).then((res2) => res2.data)
-      .catch(() => {
-        alert("Login Failed") // eslint-disable-line
-      });
+    })
+    .then((res2) => res2.data)
+    .catch(() => {
+      alert("Login Failed") // eslint-disable-line
+    });
   }).catch(() => {
     alert("Login Failed") // eslint-disable-line
   });

@@ -13,7 +13,7 @@ export const Column = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  padding: 10px 0 0 10px;
+  padding: 30px 0 0 30px;
 `;
 
 export const Header = styled.div`
@@ -24,4 +24,11 @@ export const Header = styled.div`
   font-size: 32px;
   font-weight: bold;
   padding-bottom: 10px;
+`;
+
+export const Description = styled.div`
+  font-size: 24px;
+  flex: 2;
+  padding: 40px;
+  box-sizing: border-box;
 `;

@@ -11,7 +11,8 @@
     "heroku-postbuild": "webpack -p",
     "lint": "eslint src test server",
     "clean": "rm -rf dist",
-    "test": "karma start"
+    "test": "karma start",
+    "watch": "watch 'npm run dev-build' ./src"
   },
   "author": "Joe Attardi",
   "license": "ISC",
@@ -64,6 +65,7 @@
     "redux": "^4.0.4",
     "redux-thunk": "^2.1.0",
     "serve-favicon": "^2.5.0",
-    "styled-components": "4.4.1"
+    "styled-components": "4.4.1",
+    "watch": "^1.0.2"
   }
 }

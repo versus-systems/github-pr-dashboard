@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactMinimalPieChart from 'react-minimal-pie-chart';
 
-import '../../../images/bug.png';
+import '../../../images/bug.svg';
 
 const BugChart = ({ bugsFixed, bugsCreated /* , height, width*/ }) => (
   <ReactMinimalPieChart

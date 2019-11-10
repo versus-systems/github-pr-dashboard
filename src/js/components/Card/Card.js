@@ -11,9 +11,11 @@ const Card = ({
   full,
 }) => (
   <Wrapper id={id} box={box} full={full}>
-    <Header>
-      {title}
-    </Header>
+    {title &&
+      <Header>
+        {title}
+      </Header>
+    }
     <Content pad={padContent}>
       {children}
     </Content>

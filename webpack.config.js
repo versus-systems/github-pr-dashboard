@@ -26,11 +26,17 @@ module.exports = {
 
   module: {
     preLoaders: [
+      // {
+      //   test: /\.jsx?$/,
+      //   loader: 'eslint',
+      //   include: [path.resolve(__dirname, 'src')]
+      // },
+
       {
-        test: /\.jsx?$/,
-        loader: 'eslint',
-        include: [path.resolve(__dirname, 'src')]
-      }
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+      },
     ],
 
     loaders: [

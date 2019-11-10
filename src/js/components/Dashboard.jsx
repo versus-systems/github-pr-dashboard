@@ -7,6 +7,7 @@ import Card from './Card';
 import PullRequest from './PullRequest';
 import ErrorMessage from './ErrorMessage';
 import Metrics from './Metrics';
+import Counts from './Counts';
 import Login from './Login';
 import { Row, Column, Wrapper, Header } from './styles';
 import { loadPullRequests } from '../actions';
@@ -45,8 +46,10 @@ class Main extends React.Component {
               <Metrics />
             </Row>
 
-            <Row flex={1}>
-              <Card title="Pull Requests" full>
+            <Column flex={1}>
+              <Counts />
+
+              <Card title="Reviews Needed">
                 <CSSTransitionGroup
                   transitionName="pr"
                   transitionEnterTimeout={500}
@@ -59,7 +62,7 @@ class Main extends React.Component {
                   )}
                 </CSSTransitionGroup>
               </Card>
-            </Row>
+            </Column>
           </Row>
         </Column>
       </Wrapper>

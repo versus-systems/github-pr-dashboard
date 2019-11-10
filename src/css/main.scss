@@ -6,9 +6,10 @@ $success-color: #21a12e;
 $repo-link-color: #bbdde1;
 
 body {
-  background-color: #EEEEEE;
-  font-family: 'Open Sans', sans-serif;
+  background-color: #1e1e2f;
+  font-family: 'Roboto', 'Open Sans', sans-serif;
   margin: 0;
+  color: #b1b1b5;
 }
 
 .overlay {
@@ -368,7 +369,7 @@ button {
 
 #bugs {
   svg {
-    background-image: url("/images/bug.png");
+    background-image: url("/images/bug.svg");
     background-size: 30%;
     background-position: center;
     background-repeat: no-repeat;

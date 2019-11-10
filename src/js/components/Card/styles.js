@@ -14,10 +14,11 @@ export const getContentSize = () => {
 };
 
 export const Wrapper = styled.div`
-  margin: 0 10px 10px 0;
-  border: 1px solid #e3e3e3;
+  margin: 0 30px 30px 0;
+  border: 1px solid #313452;
+  padding: 30px;
   box-sizing: border-box;
-  background-color: white;
+  background-color: #26293b;
   display: flex;
   flex-direction: column;
 
@@ -38,9 +39,8 @@ export const Header = styled.div`
   height: 48px;
   padding: 10px 16px 0;
   flex-grow: 0;
-  color: #000;
+  color: #959cb6;
   font-size: 28px;
-  font-weight: bold;
 `;
 
 export const Content = styled.div`

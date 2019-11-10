@@ -79,8 +79,8 @@ exports.getBugsCreated = function getBugsCreated(req, res) {
 };
 
 exports.getBlockingStories = function getBlockingStories(req, res) {
-  clubhouseService.getBlockingStories().then(count => {
-    res.status(200).json({ count });
+  clubhouseService.getBlockingStories().then(stories => {
+    res.status(200).json({ stories });
   }).catch(error => {
     res.status(500).json({
       error: `Failed to load blocking stories: ${error.message}`
