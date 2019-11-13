@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CSSTransitionGroup } from 'react-transition-group';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Card from './Card';
@@ -35,36 +34,30 @@ class Main extends React.Component {
     }
 
     return (
-      <Wrapper>
-        <Column>
-          <Header>
-            VS Engineering
-          </Header>
+      <Wrapper id="dashboard">
+        <Header>
+          VS Engineering
+        </Header>
 
-          <Row>
-            <Row flex={1}>
-              <Metrics />
-            </Row>
+        <Row style={{ flexGrow: 1, overflow: 'hidden' }}>
+          <Row flex={2}>
+            <Metrics />
+          </Row>
 
-            <Column flex={1}>
-              <Counts />
+          <Column flex={3}>
+            <Counts />
 
-              <Card title="Reviews Needed">
-                <CSSTransitionGroup
-                  transitionName="pr"
-                  transitionEnterTimeout={500}
-                  transitionLeaveTimeout={800}
-                >
-                  {pullRequests.map(pr =>
-                    <div key={pr.id}>
-                      <PullRequest key={pr.id} pullRequest={pr} />
-                    </div>
+            <Column style={{ flexGrow: 1, overflow: 'hidden' }}>
+              <Card title="Reviews Needed" hideOverflow>
+                <Column style={{ alignSelf: 'stretch', width: '100%' }}>
+                  {[...pullRequests].map(pr =>
+                    <PullRequest key={pr.id + Math.random()} pullRequest={pr} />
                   )}
-                </CSSTransitionGroup>
+                </Column>
               </Card>
             </Column>
-          </Row>
-        </Column>
+          </Column>
+        </Row>
       </Wrapper>
     );
   }

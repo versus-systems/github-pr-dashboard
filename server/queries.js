@@ -52,6 +52,7 @@ exports.openPullRequests = `
           number
           createdAt
           repository {
+            name
             nameWithOwner
             url
             id

@@ -4,11 +4,7 @@ import axios from 'axios';
 import BugChart from './BugChart';
 import Gauge from './Gauge';
 import Card from './Card';
-import Counts from './Counts';
-import { Value, getContentSize } from './Card/styles';
 import { Row, Column, Description } from './styles';
-
-import rocket from '../../images/rocket.png';
 
 class Metrics extends React.Component {
   constructor() {
@@ -42,55 +38,46 @@ class Metrics extends React.Component {
 
   render() {
     const { bugsFixed, bugsCreated, leadTime, cycleTime } = this.state;
-    const { height, width } = getContentSize();
 
     return (
-      <Column style={{ width: '100%' }}>
-        <Card>
-          <Row>
-            <Gauge
-              id="lead-gauge"
-              value={leadTime.days}
-              min={0}
-              max={20}
-              type="month"
-              description={(value) =>
-                <Description>
-                  The average feature is in production value {value} after being requested.
-                </Description>
-              }
-            />
-
-            <Gauge
-              id="cycle-gauge"
-              value={cycleTime.days}
-              min={0}
-              max={10}
-              type="sprint"
-              description={(value) =>
-                <Description>
-                  The average feature is in production value {value} after dev work begins.
-                </Description>
-              }
-            />
-          </Row>
-        </Card>
-
-        <Row>
-          <Card id="bugs">
+      <Column>
+        <Row style={{ flexGrow: 2 }}>
+          <Card>
             <Row>
-              <BugChart
-                bugsFixed={bugsFixed}
-                bugsCreated={bugsCreated}
-                height={height}
-                width={width}
+              <Gauge
+                id="lead-gauge"
+                value={leadTime.days}
+                min={0}
+                max={20}
+                type="month"
+                description={(value) =>
+                  <Description>
+                    The average feature is in production value {value} after being requested.
+                  </Description>
+                }
               />
 
-              <Description>
-                In the past week, {bugsFixed} bugs were fixed and {bugsCreated} new bugs were filed.
-              </Description>
+              <Gauge
+                id="cycle-gauge"
+                value={cycleTime.days}
+                min={0}
+                max={10}
+                type="sprint"
+                description={(value) =>
+                  <Description>
+                    The average feature is in production value {value} after dev work begins.
+                  </Description>
+                }
+              />
             </Row>
           </Card>
+        </Row>
+
+        <Row style={{ flexGrow: 1 }}>
+          <BugChart
+            bugsFixed={bugsFixed}
+            bugsCreated={bugsCreated}
+          />
         </Row>
 
       </Column>

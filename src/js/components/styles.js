@@ -14,16 +14,24 @@ export const Column = styled.div`
 
 export const Wrapper = styled.div`
   padding: 30px 0 0 30px;
+  height: 100vh;
+  max-height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: hidden;
 `;
 
 export const Header = styled.div`
   width: 100%;
-  height: 50px;
-  line-height: 50px;
-  text-align: center;
+  display: flex;
+  flex: 0 0 60px;
+  line-height: 60px;
+  justify-content: center;
   font-size: 32px;
   font-weight: bold;
-  padding-bottom: 10px;
+  padding-bottom: 30px;
 `;
 
 export const Description = styled.div`

@@ -32,8 +32,8 @@ class Metrics extends React.Component {
     const { deployments, blockers } = this.state;
 
     return (
-      <Card>
-        <Row>
+      <Card basis={200}>
+        <Row style={{ flexGrow: 1 }}>
           <Metric>
             <Icon src={rocket} role="presentation" />
 
@@ -58,7 +58,6 @@ class Metrics extends React.Component {
                 Blocking Issues
               </Label>
             </Column>
-
           </Metric>
         </Row>
       </Card>
