@@ -29,7 +29,7 @@ export const Header = styled.div`
   padding: 10px 16px 0;
   flex-grow: 0;
   color: #959cb6;
-  font-size: 28px;
+  font-size: 36px;
   padding-bottom: 30px;
 `;
 

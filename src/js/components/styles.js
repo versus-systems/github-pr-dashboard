@@ -27,15 +27,16 @@ export const Header = styled.div`
   width: 100%;
   display: flex;
   flex: 0 0 60px;
-  line-height: 60px;
   justify-content: center;
-  font-size: 32px;
-  font-weight: bold;
   padding-bottom: 30px;
 `;
 
+export const Logo = styled.img`
+  height: 60px;
+`;
+
 export const Description = styled.div`
-  font-size: 24px;
+  font-size: 32px;
   flex: 2;
   padding: 40px;
   box-sizing: border-box;

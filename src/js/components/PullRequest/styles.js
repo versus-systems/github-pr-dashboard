@@ -21,14 +21,14 @@ export const Info = styled.div`
 `;
 
 export const Title = styled.div`
-  font-size: 24px;
+  font-size: 32px;
   font-weight: bold;
   color: #9e9ea3;
   text-decoration: none;
 `;
 
 export const Repo = styled.div`
-  font-size: 18px;
+  font-size: 24px;
   text-decoration: none;
   color: #9e9ea3;
 `;

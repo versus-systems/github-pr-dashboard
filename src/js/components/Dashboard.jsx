@@ -8,8 +8,10 @@ import ErrorMessage from './ErrorMessage';
 import Metrics from './Metrics';
 import Counts from './Counts';
 import Login from './Login';
-import { Row, Column, Wrapper, Header } from './styles';
+import { Row, Column, Wrapper, Header, Logo } from './styles';
 import { loadPullRequests } from '../actions';
+
+import logo from '../../images/logo.svg';
 
 class Main extends React.Component {
   componentDidMount() {
@@ -36,7 +38,7 @@ class Main extends React.Component {
     return (
       <Wrapper id="dashboard">
         <Header>
-          VS Engineering
+          <Logo src={logo} />
         </Header>
 
         <Row style={{ flexGrow: 1, overflow: 'hidden' }}>

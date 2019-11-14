@@ -33,7 +33,7 @@ class Metrics extends React.Component {
 
     return (
       <Card basis={200}>
-        <Row style={{ flexGrow: 1 }}>
+        <Row style={{ flexGrow: 1, justifyContent: 'space-evenly' }}>
           <Metric>
             <Icon src={rocket} role="presentation" />
 

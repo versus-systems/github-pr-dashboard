@@ -5,16 +5,19 @@ export const Metric = styled.div`
   flexDirection: row;
   flex: 1;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
 `;
 
 export const Count = styled.div`
   font-size: 72px;
+  line-height: 72px;
   font-weight: bold;
+  padding-left: 40px;
 `;
 
 export const Label = styled.div`
   font-size: 24px;
+  padding-left: 40px;
 `;
 
 export const Icon = styled.img`
