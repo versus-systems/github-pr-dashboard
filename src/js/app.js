@@ -12,7 +12,7 @@ import Team from './pages/Team';
 import TeamMember from './pages/TeamMember';
 import configureStore from './store';
 
-import '../css/main.scss';
+import '../css/main.css';
 
 const store = configureStore();
 

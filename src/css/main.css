@@ -1,0 +1,13 @@
+body {
+  background-color: #1e1e2f;
+  font-family: 'Roboto', 'Open Sans', sans-serif;
+  margin: 0;
+  color: #b1b1b5;
+}
+
+#bugs svg {
+  background-image: url("/images/bug.svg");
+  background-size: 30%;
+  background-position: center;
+  background-repeat: no-repeat;
+}

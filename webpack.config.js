@@ -1,72 +1,62 @@
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  mode: 'development',
+
   entry: [
-    './src/js/app.js'
+    '@babel/polyfill',
+    './src/js/app.js',
   ],
 
   output: {
-    path: './dist',
+    path: `${__dirname}/dist`,
     publicPath: '/',
     filename: 'bundle.js'
   },
 
-  resolve: {
-    root: __dirname,
-    extensions: ['', '.js', '.jsx']
-  },
-
-  devtool: 'cheap-source-map',
-
-  devServer: {
-    contentBase: 'dist'
-  },
-
   module: {
-    preLoaders: [
-      // {
-      //   test: /\.jsx?$/,
-      //   loader: 'eslint',
-      //   include: [path.resolve(__dirname, 'src')]
-      // },
-
+    rules: [
       {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
       },
-    ],
-
-    loaders: [
       {
         test: /\.css$/,
-        loaders: ['style', 'css']
+        loaders: ['style-loader', 'css-loader']
       },
       {
         test: /\.scss$/,
-        loaders: ['style', 'css', 'sass']
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.json$/,
         loader: 'json-loader'
       },
       {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader'
+        test: /\.(jpg|png|svg|gif)$/,
+        loader: 'file-loader',
+        options: {
+          name: 'images/[name].[hash].[ext]',
+        },
       },
-      {
-        test: /\.(png|svg|jpg|gif)$/,
-        loader: 'file-loader?name=[name].[ext]&outputPath=images/'
-      }
     ]
   },
 
+  resolve: {
+    modules: [
+      'node_modules',
+    ],
+  },
+
   plugins: [
+    new webpack.LoaderOptionsPlugin({ debug: true }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin({
-      template: 'src/index.ejs'
+      template: './src/index.html',
+      inject: 'body',
     })
-  ]
+  ],
 };
