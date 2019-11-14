@@ -5,22 +5,15 @@ import { bindActionCreators } from 'redux';
 import { login } from '../actions';
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.login = this.login.bind(this);
-    this.setPassword = this.setPassword.bind(this);
-
-    this.state = {
-      password: '',
-    };
+  state = {
+    password: '',
   }
 
-  setPassword(e) {
+  setPassword = (e) => {
     this.setState({ password: e.target.value });
   }
 
-  login() {
+  login = () => {
     this.props.actions.login(this.state.password);
   }
 

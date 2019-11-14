@@ -7,16 +7,12 @@ import Card from './Card';
 import { Row, Column, Description } from './styles';
 
 class Metrics extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      bugsFixed: null,
-      bugsCreated: null,
-      deployments: 0,
-      leadTime: { days: 0, hours: 0 },
-      cycleTime: { days: 0, hours: 0 },
-    };
+  state = {
+    bugsFixed: null,
+    bugsCreated: null,
+    deployments: 0,
+    leadTime: { days: 0, hours: 0 },
+    cycleTime: { days: 0, hours: 0 },
   }
 
   componentDidMount() {

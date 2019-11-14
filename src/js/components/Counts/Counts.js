@@ -9,13 +9,9 @@ import rocket from '../../../images/rocket.svg';
 import stop from '../../../images/stop.svg';
 
 class Metrics extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      deployments: 0,
-      blockers: 0,
-    };
+  state = {
+    deployments: 0,
+    blockers: 0,
   }
 
   componentDidMount() {
