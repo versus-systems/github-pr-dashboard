@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { FETCH_INTERVAL } from 'config';
 import Gauge from 'components/Gauge';
 import Card from 'components/Card';
 import { Row, Description } from 'styles';
@@ -11,12 +12,18 @@ class Latency extends React.Component {
   }
 
   componentDidMount() {
+    this.getLatency();
+  }
+
+  getLatency = () => {
     axios.get(`/leadTime?token=${localStorage.getItem('token')}`).then((response) => {
       this.setState({
         leadTime: response.data.leadTime,
         cycleTime: response.data.cycleTime,
       });
     });
+
+    setTimeout(this.getLatency, FETCH_INTERVAL);
   }
 
   render() {

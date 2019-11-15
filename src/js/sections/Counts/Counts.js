@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { FETCH_INTERVAL } from 'config';
 import { Row, Column } from 'styles';
 import Card from 'components/Card';
 import { Metric, Count, Label, Icon } from './styles';
@@ -14,6 +15,10 @@ class Metrics extends React.Component {
   }
 
   componentDidMount() {
+    this.getCounts();
+  }
+
+  getCounts = () => {
     axios.get(`/recentDeployments?token=${localStorage.getItem('token')}`).then((response) => {
       this.setState({ deployments: response.data.deployments.length });
     });
@@ -21,6 +26,8 @@ class Metrics extends React.Component {
     axios.get(`/blockingStories?token=${localStorage.getItem('token')}`).then((response) => {
       this.setState({ blockers: response.data.stories.length });
     });
+
+    setTimeout(this.getCounts, FETCH_INTERVAL);
   }
 
   render() {

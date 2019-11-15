@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { FETCH_INTERVAL } from 'config';
 import Card from 'components/Card';
 import PieChart from 'components/PieChart';
 import { Row, Description } from 'styles';
@@ -17,6 +18,10 @@ class Bugs extends React.Component {
   }
 
   componentDidMount() {
+    this.getBugs();
+  }
+
+  getBugs = () => {
     axios.get(`/bugsFixed?token=${localStorage.getItem('token')}`).then((response) => {
       this.setState({ bugsFixed: response.data.count });
     });
@@ -24,6 +29,8 @@ class Bugs extends React.Component {
     axios.get(`/bugsCreated?token=${localStorage.getItem('token')}`).then((response) => {
       this.setState({ bugsCreated: response.data.count });
     });
+
+    setTimeout(this.getBugs, FETCH_INTERVAL);
   }
 
   getDescription = () => {

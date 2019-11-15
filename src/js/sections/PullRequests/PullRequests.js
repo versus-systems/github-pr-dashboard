@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { FETCH_INTERVAL } from 'config';
 import Card from 'components/Card';
 import PullRequest from 'components/PullRequest';
 import { Column } from 'styles';
@@ -18,7 +19,7 @@ class Dashboard extends React.Component {
       this.setState({ pullRequests: response.data.pullRequests });
     });
 
-    setTimeout(this.getPullRequests, 30000);
+    setTimeout(this.getPullRequests, FETCH_INTERVAL);
   }
 
   render() {
