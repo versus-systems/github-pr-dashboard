@@ -36,6 +36,12 @@ const timeUnits = (millis) => {
   return { days, hours };
 };
 
+const median = (arr) => {
+  const mid = Math.floor(arr.length / 2);
+  const sorted = [...arr].sort((a, b) => a - b);
+  return arr.length % 2 !== 0 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+};
+
 exports.getBugsFixed = () =>
   axios.post(`https://api.clubhouse.io/api/v3/stories/search?token=${token}`, {
     project_id: '4057',
@@ -97,10 +103,10 @@ exports.getLeadTime = () =>
         });
 
     const leadTimes = times.map(t => t.leadTime);
-    const averageLeadTime = leadTimes.reduce((a, b) => a + b, 0) / leadTimes.length;
+    const averageLeadTime = median(leadTimes);
 
     const cycleTimes = times.map(t => t.cycleTime);
-    const averageCycleTime = cycleTimes.reduce((a, b) => a + b, 0) / cycleTimes.length;
+    const averageCycleTime = median(cycleTimes);
 
     return {
       leadTime: timeUnits(averageLeadTime),
