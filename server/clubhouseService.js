@@ -3,7 +3,7 @@ const moment = require('moment');
 const axios = require('axios');
 
 const token = process.env.CLUBHOUSE_API_TOKEN;
-const oneWeekAgo = moment().subtract(8, 'd').toISOString();
+const oneWeekAgo = moment().subtract(7, 'd').toISOString();
 
 
 const isWeekend = (date) => {
