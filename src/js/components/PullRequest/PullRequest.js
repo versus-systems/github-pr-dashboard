@@ -31,3 +31,5 @@ const PR = ({ pullRequest }) => {
 PR.propTypes = {
   pullRequest: PropTypes.object.isRequired
 };
+
+export default PR;

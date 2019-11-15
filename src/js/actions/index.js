@@ -18,41 +18,6 @@ export const ActionTypes = {
   SORT: 'SORT'
 };
 
-export function setError(error) {
-  return {
-    type: ActionTypes.SET_ERROR,
-    error
-  };
-}
-
-export function setRepos(repos) {
-  return {
-    type: ActionTypes.SET_REPOS,
-    repos
-  };
-}
-
-export function setTimeToClose(timeToClose) {
-  return {
-    type: ActionTypes.TIME_TO_CLOSE,
-    timeToClose
-  };
-}
-
-export function setTopCommenters(commenters) {
-  return {
-    type: ActionTypes.SET_TOP_COMMENTERS,
-    commenters
-  };
-}
-
-export function setMergedThisWeek(mergedThisWeek) {
-  return {
-    type: ActionTypes.SET_MERGED_THIS_WEEK,
-    mergedThisWeek
-  };
-}
-
 export function addPullRequests(pullRequests, sortOptions) {
   return {
     type: ActionTypes.ADD_PULL_REQUESTS,
@@ -75,30 +40,9 @@ export function updatePullRequest(pullRequest) {
   };
 }
 
-export function addFailedRepo(failedRepo) {
-  return {
-    type: ActionTypes.ADD_FAILED_REPO,
-    failedRepo
-  };
-}
-
 export function refresh() {
   return {
     type: ActionTypes.REFRESH
-  };
-}
-
-export function setTeam(team) {
-  return {
-    type: ActionTypes.SET_TEAM,
-    team
-  };
-}
-
-export function setTeamMember(teamMember) {
-  return {
-    type: ActionTypes.SET_TEAM_MEMBER,
-    teamMember
   };
 }
 
@@ -110,43 +54,11 @@ export function loadPullRequests(showLoading = false) {
     }
 
     return axios.get(`/pulls?token=${localStorage.getItem('token')}`).then((response) => {
-      dispatch(setError(''));
       dispatch(addPullRequests(response.data.pullRequests, sortOptions));
-      dispatch(setRepos(response.data.repos));
-      dispatch(setTimeToClose(response.data.timeToClose));
-      dispatch(setMergedThisWeek(response.data.mergedThisWeek));
-      dispatch(setTopCommenters(response.data.topCommenters));
-
       setTimeout(() => dispatch(loadPullRequests(false)), 10000);
     }).catch(() => {
-      dispatch(setError('Failed to load pull requests. Double check that all your repos exist!'));
       setTimeout(() => dispatch(loadPullRequests(false)), 10000);
     });
-  };
-}
-
-export function loadTeam() {
-  return (dispatch) => {
-    dispatch({ type: ActionTypes.START_LOADING });
-
-    return axios.get(`/teamMembers?token=${localStorage.getItem('token')}`).then((response) => {
-      dispatch(setTeam(response.data.team));
-    }).catch((e) => {
-      dispatch(setError(`Failed to load team: ${e}`));
-    });
-  };
-}
-
-export function loadTeamMember(username) {
-  return (dispatch) => {
-    dispatch({ type: ActionTypes.START_LOADING });
-
-    return axios.get(`/teamMember?id=${username}&token=${localStorage.getItem('token')}`)
-      .then((response) => {
-        dispatch(setTeamMember(response.data));
-      }).catch((e) => {
-        dispatch(setError(`Failed to load team member: ${e}`));
-      });
   };
 }
 
