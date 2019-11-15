@@ -27,8 +27,8 @@ const PieChart = ({ id, data }) => (
 );
 
 PieChart.propTypes = {
-  id: PropTypes.number,
-  data: PropTypes.number,
+  id: PropTypes.string,
+  data: PropTypes.array,
 };
 
 export default PieChart;

@@ -13,8 +13,8 @@ const green = '#21a12e';
 
 class Bugs extends React.Component {
   state = {
-    bugsFixed: null,
-    bugsCreated: null,
+    bugsFixed: 0,
+    bugsCreated: 0,
   }
 
   componentDidMount() {
