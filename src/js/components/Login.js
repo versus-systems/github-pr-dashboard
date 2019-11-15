@@ -34,16 +34,11 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  loading: PropTypes.bool.isRequired,
-  pullRequests: PropTypes.array.isRequired,
-  repos: PropTypes.array.isRequired,
   title: PropTypes.string.isRequired,
-  failedRepos: PropTypes.array.isRequired,
-  error: PropTypes.string.isRequired,
   actions: PropTypes.object.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({ login }, dispatch),
 });
 

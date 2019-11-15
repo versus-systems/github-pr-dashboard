@@ -5,7 +5,7 @@ export default function ErrorMessage({ message }) {
   return (
     <div className="error-message">
       <div className="error-message-details">
-        <div className="warning-symbol"><i className="fa fa-2x fa-warning"></i></div>
+        <div className="warning-symbol"><i className="fa fa-2x fa-warning" /></div>
         <div>{message}</div>
       </div>
     </div>
@@ -13,6 +13,5 @@ export default function ErrorMessage({ message }) {
 }
 
 ErrorMessage.propTypes = {
-  message: PropTypes.string.isRequired,
-  details: PropTypes.string
+  message: PropTypes.string.isRequired
 };

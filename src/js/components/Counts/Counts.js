@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 import Card from '../Card';
 import { Row, Column } from '../styles';
@@ -15,11 +14,11 @@ class Metrics extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`/recentDeployments?token=${localStorage.getItem('token')}`).then(response => {
+    axios.get(`/recentDeployments?token=${localStorage.getItem('token')}`).then((response) => {
       this.setState({ deployments: response.data.deployments.length });
     });
 
-    axios.get(`/blockingStories?token=${localStorage.getItem('token')}`).then(response => {
+    axios.get(`/blockingStories?token=${localStorage.getItem('token')}`).then((response) => {
       this.setState({ blockers: response.data.stories.length });
     });
   }
@@ -60,9 +59,5 @@ class Metrics extends React.Component {
     );
   }
 }
-
-Metrics.propTypes = {
-  pullRequests: PropTypes.array,
-};
 
 export default Metrics;

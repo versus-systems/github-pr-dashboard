@@ -39,7 +39,9 @@ const sprintColors = [
   '#ff0000',
 ];
 
-const Gauge = ({ id, value, max, type, description }) => {
+const Gauge = ({
+  id, value, max, type, description
+}) => {
   if (!value) {
     return null;
   }
@@ -69,8 +71,8 @@ const Gauge = ({ id, value, max, type, description }) => {
         nrOfLevels={max}
         colors={colors}
         percent={value / max}
-        needleColor={'#959cb6'}
-        needleBaseColor={'#959cb6'}
+        needleColor="#959cb6"
+        needleBaseColor="#959cb6"
         hideText
       />
       {description(formattedValue)}
@@ -83,7 +85,7 @@ Gauge.propTypes = {
   max: PropTypes.number,
   value: PropTypes.number,
   type: PropTypes.string,
-  description: PropTypes.function,
+  description: PropTypes.func,
 };
 
 export default Gauge;

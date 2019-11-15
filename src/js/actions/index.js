@@ -117,7 +117,7 @@ export function loadPullRequests(showLoading = false) {
       dispatch({ type: ActionTypes.START_LOADING });
     }
 
-    return axios.get(`/pulls?token=${localStorage.getItem('token')}`).then(response => {
+    return axios.get(`/pulls?token=${localStorage.getItem('token')}`).then((response) => {
       dispatch(setError(''));
       dispatch(addPullRequests(response.data.pullRequests, sortOptions));
       dispatch(setRepos(response.data.repos));
@@ -138,7 +138,7 @@ export function loadTeam() {
   return (dispatch) => {
     dispatch({ type: ActionTypes.START_LOADING });
 
-    return axios.get(`/teamMembers?token=${localStorage.getItem('token')}`).then(response => {
+    return axios.get(`/teamMembers?token=${localStorage.getItem('token')}`).then((response) => {
       dispatch(setTeam(response.data.team));
     }).catch((e) => {
       dispatch(setError(`Failed to load team: ${e}`));
@@ -151,7 +151,7 @@ export function loadTeamMember(username) {
     dispatch({ type: ActionTypes.START_LOADING });
 
     return axios.get(`/teamMember?id=${username}&token=${localStorage.getItem('token')}`)
-      .then(response => {
+      .then((response) => {
         dispatch(setTeamMember(response.data));
       }).catch((e) => {
         dispatch(setError(`Failed to load team member: ${e}`));
@@ -176,7 +176,7 @@ export function loginSuccess() {
 }
 
 export function login(password) {
-  return (dispatch) =>
+  return dispatch =>
     axios.post('/login', { password }).then((res) => {
       localStorage.setItem('token', res.data.token);
       dispatch(loadPullRequests(true));

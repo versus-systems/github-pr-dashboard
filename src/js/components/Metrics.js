@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 import BugChart from './BugChart';
 import Gauge from './Gauge';
@@ -10,21 +9,20 @@ class Metrics extends React.Component {
   state = {
     bugsFixed: null,
     bugsCreated: null,
-    deployments: 0,
     leadTime: { days: 0, hours: 0 },
     cycleTime: { days: 0, hours: 0 },
   }
 
   componentDidMount() {
-    axios.get(`/bugsFixed?token=${localStorage.getItem('token')}`).then(response => {
+    axios.get(`/bugsFixed?token=${localStorage.getItem('token')}`).then((response) => {
       this.setState({ bugsFixed: response.data.count });
     });
 
-    axios.get(`/bugsCreated?token=${localStorage.getItem('token')}`).then(response => {
+    axios.get(`/bugsCreated?token=${localStorage.getItem('token')}`).then((response) => {
       this.setState({ bugsCreated: response.data.count });
     });
 
-    axios.get(`/leadTime?token=${localStorage.getItem('token')}`).then(response => {
+    axios.get(`/leadTime?token=${localStorage.getItem('token')}`).then((response) => {
       this.setState({
         leadTime: response.data.leadTime,
         cycleTime: response.data.cycleTime,
@@ -33,7 +31,9 @@ class Metrics extends React.Component {
   }
 
   render() {
-    const { bugsFixed, bugsCreated, leadTime, cycleTime } = this.state;
+    const {
+      bugsFixed, bugsCreated, leadTime, cycleTime
+    } = this.state;
 
     return (
       <Column>
@@ -46,11 +46,11 @@ class Metrics extends React.Component {
                 min={0}
                 max={20}
                 type="month"
-                description={(value) =>
+                description={value => (
                   <Description>
                     The average feature is in production value {value} after being requested.
                   </Description>
-                }
+                )}
               />
 
               <Gauge
@@ -59,11 +59,11 @@ class Metrics extends React.Component {
                 min={0}
                 max={10}
                 type="sprint"
-                description={(value) =>
+                description={value => (
                   <Description>
                     The average feature is in production value {value} after dev work begins.
                   </Description>
-                }
+                )}
               />
             </Row>
           </Card>
@@ -80,9 +80,5 @@ class Metrics extends React.Component {
     );
   }
 }
-
-Metrics.propTypes = {
-  pullRequests: PropTypes.array,
-};
 
 export default Metrics;

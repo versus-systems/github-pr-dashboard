@@ -1,3 +1,5 @@
+/* eslint-disable no-console, no-shadow, no-unused-vars */
+
 const axios = require('axios');
 const moment = require('moment');
 const queries = require('./queries');
@@ -17,7 +19,7 @@ function extractPullRequests(result) {
     const repo = result.data.data.repositoryOwner[repoName];
     return [...prs, ...repo.pullRequests.edges];
   }, [])
-  .map((pr) => pr.node);
+    .map(pr => pr.node);
 }
 
 exports.getPastWeekData = function getPastWeekData() {
@@ -31,7 +33,7 @@ exports.getPastWeekData = function getPastWeekData() {
         return closedDate > lastWeek;
       });
 
-      const intervals = pastWeek.map(pr => {
+      const intervals = pastWeek.map((pr) => {
         const createdAt = new Date(pr.createdAt).getTime();
         const closedAt = new Date(pr.closedAt).getTime();
         return closedAt - createdAt;
@@ -49,11 +51,11 @@ exports.getPastWeekData = function getPastWeekData() {
 
 exports.loadPullRequests = function loadPullRequests() {
   return graphCall(queries.openPullRequests)
-    .then((result) => extractPullRequests(result))
-    .then((pullRequests) =>
-      pullRequests.map(pr => {
+    .then(result => extractPullRequests(result))
+    .then(pullRequests =>
+      pullRequests.map((pr) => {
         const commitStatus = pr.commits.nodes[0].commit.status;
-        const status = commitStatus ? commitStatus.state.toLowerCase() : "";
+        const status = commitStatus ? commitStatus.state.toLowerCase() : '';
 
         return {
           ...pr,
@@ -64,26 +66,25 @@ exports.loadPullRequests = function loadPullRequests() {
             description: status
           },
         };
-      })
-    ).catch(e => console.log(e));
+      })).catch(e => console.log(e));
 };
 
 exports.loadTeam = function loadTeam() {
   return graphCall(queries.team)
-    .then((result) => result.data.data.organization.members.edges)
-    .catch((e) => console.log(e));
+    .then(result => result.data.data.organization.members.edges)
+    .catch(e => console.log(e));
 };
 
 exports.loadTeamMemberStats = function loadTeamMemberStats(login) {
   return graphCall(queries.teamMember(login))
-    .then((result) => result.data.data)
-    .catch((e) => console.log(e));
-}
+    .then(result => result.data.data)
+    .catch(e => console.log(e));
+};
 
-exports.loadTopCommenters = function loadTopCommenters(login) {
+exports.loadTopCommenters = function loadTopCommenters() {
   return graphCall(queries.recentPullRequests())
-    .then((result) => result.data.data)
-    .then(data => {
+    .then(result => result.data.data)
+    .then((data) => {
       const totals = {};
       const oneWeekAgo = moment().subtract(7, 'days');
       const flatData = data.search.edges.map(({ node }) => ({
@@ -99,9 +100,9 @@ exports.loadTopCommenters = function loadTopCommenters(login) {
           .reviews
           .filter(({ createdAt }) => moment(createdAt).isAfter(oneWeekAgo))
           .forEach((review) => {
-            const login = review.author.login;
+            const { login } = review.author;
             const decision = ['APPROVED', 'CHANGES_REQUESTED'].includes(review.state) ? 1 : 0;
-            const initialComment = !!review.body.length ? 1 : 0;
+            const initialComment = review.body.length ? 1 : 0;
             const additionalComments = review.comments.totalCount;
             const total = (decision + initialComment + additionalComments) || 1;
 
@@ -113,16 +114,16 @@ exports.loadTopCommenters = function loadTopCommenters(login) {
           .comments
           .filter(({ createdAt }) => moment(createdAt).isAfter(oneWeekAgo))
           .forEach((comment) => {
-            const login = comment.author.login;
+            const { login } = comment.author;
             totals[login] = totals[login] || 0;
             totals[login] += 1;
           });
       });
 
       const totalsArray = Object.keys(totals)
-                                .map((key) => [key, totals[key]])
-                                .sort(([name, total], [name2, total2]) => total < total2 ? 1 : -1);
+        .map(key => [key, totals[key]])
+        .sort(([name, total], [name2, total2]) => (total < total2 ? 1 : -1));
       return totalsArray;
     })
-    .catch((e) => console.log(e));
-}
+    .catch(e => console.log(e));
+};

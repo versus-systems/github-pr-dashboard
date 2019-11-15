@@ -109,7 +109,7 @@ export function pullRequestsReducer(state = [], action) {
       return sortPullRequests(state);
 
     case ActionTypes.UPDATE_PULL_REQUEST:
-      return state.map(pullRequest => {
+      return state.map((pullRequest) => {
         if (pullRequest.id === action.pullRequest.id) {
           return Object.assign(
             {},

@@ -72,8 +72,6 @@ const BugChart = ({ bugsFixed, bugsCreated }) => {
 BugChart.propTypes = {
   bugsFixed: PropTypes.number,
   bugsCreated: PropTypes.number,
-  height: PropTypes.number,
-  width: PropTypes.number,
 };
 
 export default BugChart;

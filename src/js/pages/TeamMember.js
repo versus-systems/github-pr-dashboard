@@ -13,15 +13,13 @@ class TeamMember extends React.Component {
     }
   }
 
-  renderPullRequest(pr) {
-    return (
-      <li>
-        <a key={pr.url} href={pr.url}>
-          <span className="date">{moment(pr.createdAt).format(' MM/DD/YYYY')}</span> {pr.url}
-        </a>
-      </li>
-    );
-  }
+  renderPullRequest = pr => (
+    <li>
+      <a key={pr.url} href={pr.url}>
+        <span className="date">{moment(pr.createdAt).format(' MM/DD/YYYY')}</span> {pr.url}
+      </a>
+    </li>
+  )
 
   render() {
     const { loggedIn, loading, teamMember } = this.props;
@@ -70,7 +68,7 @@ TeamMember.propTypes = {
   match: PropTypes.object.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({ loadTeamMember }, dispatch),
 });
 

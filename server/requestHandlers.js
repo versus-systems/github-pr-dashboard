@@ -18,7 +18,7 @@ exports.login = function login(req, res) {
 
 exports.getPullRequests = function getPullRequests(req, res) {
   const config = configManager.getConfig();
-  githubService.loadPullRequests().then(prs => {
+  githubService.loadPullRequests().then((prs) => {
     githubService.getPastWeekData().then(({ merged, averageTime }) => {
       githubService.loadTopCommenters().then((commenters) => {
         res.status(200).json({
@@ -31,7 +31,7 @@ exports.getPullRequests = function getPullRequests(req, res) {
         });
       });
     });
-  }).catch(error => {
+  }).catch((error) => {
     res.status(500).json({
       error: `Failed to load pull requests: ${error.message}`
     });
@@ -39,9 +39,9 @@ exports.getPullRequests = function getPullRequests(req, res) {
 };
 
 exports.getTeam = function getTeam(req, res) {
-  githubService.loadTeam().then(team => {
+  githubService.loadTeam().then((team) => {
     res.status(200).json({ team });
-  }).catch(error => {
+  }).catch((error) => {
     res.status(500).json({
       error: `Failed to load team: ${error.message}`
     });
@@ -49,9 +49,9 @@ exports.getTeam = function getTeam(req, res) {
 };
 
 exports.getTeamMemberStats = function getTeamMemberStats(req, res) {
-  githubService.loadTeamMemberStats(req.query.id).then(stats => {
+  githubService.loadTeamMemberStats(req.query.id).then((stats) => {
     res.status(200).json({ stats });
-  }).catch(error => {
+  }).catch((error) => {
     res.status(500).json({
       error: `Failed to load team member: ${error.message}`
     });
@@ -59,9 +59,9 @@ exports.getTeamMemberStats = function getTeamMemberStats(req, res) {
 };
 
 exports.getBugsFixed = function getBugsFixed(req, res) {
-  clubhouseService.getBugsFixed().then(count => {
+  clubhouseService.getBugsFixed().then((count) => {
     res.status(200).json({ count });
-  }).catch(error => {
+  }).catch((error) => {
     res.status(500).json({
       error: `Failed to load fixed count: ${error.message}`
     });
@@ -69,9 +69,9 @@ exports.getBugsFixed = function getBugsFixed(req, res) {
 };
 
 exports.getBugsCreated = function getBugsCreated(req, res) {
-  clubhouseService.getBugsCreated().then(count => {
+  clubhouseService.getBugsCreated().then((count) => {
     res.status(200).json({ count });
-  }).catch(error => {
+  }).catch((error) => {
     res.status(500).json({
       error: `Failed to load bugs created count: ${error.message}`
     });
@@ -79,9 +79,9 @@ exports.getBugsCreated = function getBugsCreated(req, res) {
 };
 
 exports.getBlockingStories = function getBlockingStories(req, res) {
-  clubhouseService.getBlockingStories().then(stories => {
+  clubhouseService.getBlockingStories().then((stories) => {
     res.status(200).json({ stories });
-  }).catch(error => {
+  }).catch((error) => {
     res.status(500).json({
       error: `Failed to load blocking stories: ${error.message}`
     });
@@ -89,9 +89,9 @@ exports.getBlockingStories = function getBlockingStories(req, res) {
 };
 
 exports.getLeadTime = function getLeadTime(req, res) {
-  clubhouseService.getLeadTime().then(leadTimes => {
+  clubhouseService.getLeadTime().then((leadTimes) => {
     res.status(200).json(leadTimes);
-  }).catch(error => {
+  }).catch((error) => {
     res.status(500).json({
       error: `Failed to load lead time: ${error.message}`
     });
@@ -99,9 +99,9 @@ exports.getLeadTime = function getLeadTime(req, res) {
 };
 
 exports.getRecentDeployments = function getRecentDeployments(req, res) {
-  Deployment.recent().then(deployments => {
+  Deployment.recent().then((deployments) => {
     res.status(200).json({ deployments });
-  }).catch(error => {
+  }).catch((error) => {
     res.status(500).json({
       error: `Failed to load lead time: ${error.message}`
     });

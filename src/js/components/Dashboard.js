@@ -53,8 +53,7 @@ class Main extends React.Component {
               <Card title="Reviews Needed" hideOverflow>
                 <Column style={{ alignSelf: 'stretch', width: '100%' }}>
                   {[...pullRequests].map(pr =>
-                    <PullRequest key={pr.id + Math.random()} pullRequest={pr} />
-                  )}
+                    <PullRequest key={pr.id + Math.random()} pullRequest={pr} />)}
                 </Column>
               </Card>
             </Column>
@@ -73,7 +72,7 @@ Main.propTypes = {
   actions: PropTypes.object.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({ loadPullRequests }, dispatch),
 });
 

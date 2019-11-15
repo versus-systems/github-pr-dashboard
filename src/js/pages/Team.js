@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
@@ -13,7 +15,7 @@ class Team extends React.Component {
     }
   }
 
-  renderTeamMember(member) {
+  renderTeamMember = (member) => {
     if (member.node.name) {
       return (
         <li>
@@ -48,9 +50,9 @@ class Team extends React.Component {
       <div className="center-container">
         <h1>Team</h1>
         <ul>
-        {team && team
+          {team && team
           .sort((m1, m2) => (m1.node.login.toLowerCase() < m2.node.login.toLowerCase() ? -1 : 1))
-          .map((member) => this.renderTeamMember(member))
+          .map(member => this.renderTeamMember(member))
         }
         </ul>
       </div>
@@ -65,7 +67,7 @@ Team.propTypes = {
   actions: PropTypes.object.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({ loadTeam }, dispatch),
 });
 
