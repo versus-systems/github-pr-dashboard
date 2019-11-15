@@ -6,28 +6,18 @@ import Card from './Card';
 import PullRequest from './PullRequest';
 import Metrics from './Metrics';
 import Counts from './Counts';
-import Login from './Login';
 import { Row, Column, Wrapper, Header, Logo } from './styles';
 import { loadPullRequests } from '../actions';
 
 import logo from '../../images/logo.svg';
 
-class Main extends React.Component {
+class Dashboard extends React.Component {
   componentDidMount() {
-    if (this.props.loggedIn) {
-      this.props.actions.loadPullRequests(true);
-    }
+    this.props.actions.loadPullRequests(true);
   }
 
   render() {
-    const {
-      pullRequests,
-      loggedIn,
-    } = this.props;
-
-    if (!loggedIn) {
-      return <Login {...this.props} />;
-    }
+    const { pullRequests } = this.props;
 
     return (
       <Wrapper id="dashboard">
@@ -58,11 +48,8 @@ class Main extends React.Component {
   }
 }
 
-Main.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
+Dashboard.propTypes = {
   pullRequests: PropTypes.array.isRequired,
-  error: PropTypes.string.isRequired,
-  timeToClose: PropTypes.string.isRequired,
   actions: PropTypes.object.isRequired,
 };
 
@@ -70,4 +57,4 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({ loadPullRequests }, dispatch),
 });
 
-export default connect(state => state, mapDispatchToProps)(Main);
+export default connect(state => state, mapDispatchToProps)(Dashboard);

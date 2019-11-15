@@ -1,42 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { login } from '../actions';
+import axios from 'axios';
 
-class Login extends React.Component {
-  state = {
-    password: '',
-  }
+const Login = ({ onLogin }) => {
+  const [password, setPassword] = useState('');
 
-  setPassword = (e) => {
-    this.setState({ password: e.target.value });
-  }
+  const login = () => {
+    axios.post('/login', { password }).then((res) => {
+      localStorage.setItem('token', res.data.token);
+      onLogin(true);
+    }).catch(() => {
+      alert("Login Failed") // eslint-disable-line
+    });
+  };
 
-  login = () => {
-    this.props.actions.login(this.state.password);
-  }
-
-  render() {
-    return (
-      <div>
-        <h1>VS Engineering Dashboard</h1>
-        <input
-          value={this.state.password}
-          onChange={this.setPassword}
-        />
-        <button onClick={this.login}>LOGIN</button>
-      </div>
-    );
-  }
-}
-
-Login.propTypes = {
-  actions: PropTypes.object.isRequired,
+  return (
+    <div>
+      <h1>VS Engineering Dashboard</h1>
+      <input
+        value={password}
+        onChange={e => setPassword(e.target.value)}
+      />
+      <button onClick={login}>LOGIN</button>
+    </div>
+  );
 };
 
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators({ login }, dispatch),
-});
+Login.propTypes = {
+  onLogin: PropTypes.func.isRequired,
+};
 
-export default connect(state => state, mapDispatchToProps)(Login);
+export default Login;

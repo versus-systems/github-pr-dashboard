@@ -71,20 +71,3 @@ export function sort({ sortByRepo, orderBy }) {
     }
   };
 }
-
-export function loginSuccess() {
-  return {
-    type: ActionTypes.LOGIN_SUCCESS
-  };
-}
-
-export function login(password) {
-  return dispatch =>
-    axios.post('/login', { password }).then((res) => {
-      localStorage.setItem('token', res.data.token);
-      dispatch(loadPullRequests(true));
-      dispatch(loginSuccess());
-    }).catch(() => {
-      alert("Login Failed") // eslint-disable-line
-    });
-}

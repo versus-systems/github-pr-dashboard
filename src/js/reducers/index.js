@@ -1,14 +1,5 @@
 import { ActionTypes } from '../actions';
 
-export function loggedInReducer(state = !!localStorage.getItem('token'), action) {
-  switch (action.type) {
-    case ActionTypes.LOGIN_SUCCESS:
-      return true;
-    default:
-      return state;
-  }
-}
-
 function sortPullRequests(pullRequests) {
   const orderKey = 'createdAt';
 
@@ -24,7 +15,7 @@ function sortPullRequests(pullRequests) {
   });
 }
 
-export function pullRequestsReducer(state = [], action) {
+export function pullRequestsReducer(state = [], action) { //eslint-disable-line
   switch (action.type) {
     case ActionTypes.ADD_PULL_REQUESTS:
       return sortPullRequests(action.pullRequests);

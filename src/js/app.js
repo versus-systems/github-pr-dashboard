@@ -7,7 +7,7 @@ import {
   Switch,
 } from 'react-router-dom';
 
-import Dashboard from './components/Dashboard';
+import Application from './components/Application';
 import configureStore from './store';
 
 import '../css/main.css';
@@ -18,7 +18,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router>
       <Switch>
-        <Route exact path="/" component={Dashboard} />
+        <Route exact path="/" component={Application} />
       </Switch>
     </Router>
   </Provider>,
