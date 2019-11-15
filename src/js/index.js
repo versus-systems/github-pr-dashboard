@@ -6,7 +6,7 @@ import {
   Switch,
 } from 'react-router-dom';
 
-import Application from './components/Application';
+import Application from './Application';
 
 import '../css/main.css';
 

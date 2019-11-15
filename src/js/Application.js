@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Login from './Login';
-import Dashboard from './Dashboard';
+import Login from './views/Login';
+import Dashboard from './views/Dashboard';
 
 const Application = () => {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem('token'));

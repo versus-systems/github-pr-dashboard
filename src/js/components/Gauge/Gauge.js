@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import GaugeChart from 'react-gauge-chart';
-import { Column } from '../styles';
+import { Column } from 'styles';
 
 const monthColors = [
   '#00ff00',

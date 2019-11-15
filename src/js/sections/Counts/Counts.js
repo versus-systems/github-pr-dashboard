@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import Card from '../Card';
-import { Row, Column } from '../styles';
+import { Row, Column } from 'styles';
+import Card from 'components/Card';
 import { Metric, Count, Label, Icon } from './styles';
 
 import rocket from '../../../images/rocket.svg';

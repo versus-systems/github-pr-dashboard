@@ -1,8 +1,9 @@
 import React from 'react';
-import Metrics from './Metrics';
-import Counts from './Counts';
-import PullRequests from './PullRequests';
-import { Row, Column, Wrapper, Header, Logo } from './styles';
+import Latency from 'sections/Latency';
+import Bugs from 'sections/Bugs';
+import Counts from 'sections/Counts';
+import PullRequests from 'sections/PullRequests';
+import { Row, Column, Wrapper, Header, Logo } from 'styles';
 
 import logo from '../../images/logo.svg';
 
@@ -14,7 +15,16 @@ const Dashboard = () => (
 
     <Row style={{ flexGrow: 1, overflow: 'hidden' }}>
       <Row flex={2}>
-        <Metrics />
+        <Column>
+          <Row style={{ flexGrow: 2 }}>
+            <Latency />
+          </Row>
+
+          <Row style={{ flexGrow: 1 }}>
+            <Bugs />
+          </Row>
+
+        </Column>
       </Row>
 
       <Column flex={3}>

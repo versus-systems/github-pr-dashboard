@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -6,7 +7,7 @@ module.exports = {
 
   entry: [
     '@babel/polyfill',
-    './src/js/app.js',
+    './src/js/index.js',
   ],
 
   output: {
@@ -46,6 +47,7 @@ module.exports = {
 
   resolve: {
     modules: [
+      resolve(__dirname, 'src', 'js'),
       'node_modules',
     ],
   },

@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import Card from './Card';
-import PullRequest from './PullRequest';
-import { Column } from './styles';
+import Card from 'components/Card';
+import PullRequest from 'components/PullRequest';
+import { Column } from 'styles';
 
 class Dashboard extends React.Component {
   state = {
