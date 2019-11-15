@@ -4,7 +4,6 @@ import thunk from 'redux-thunk';
 import {
   loadingReducer,
   reposReducer,
-  titleReducer,
   pullRequestsReducer,
   failedReposReducer,
   errorReducer,
@@ -24,7 +23,6 @@ export default function configureStore() {
     failedRepos: failedReposReducer,
     loading: loadingReducer,
     error: errorReducer,
-    title: titleReducer,
     timeToClose: timeToCloseReducer,
     mergedThisWeek: mergedThisWeekReducer,
     team: teamReducer,

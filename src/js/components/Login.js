@@ -19,22 +19,19 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="container-header">
-          <h1>{this.props.title}</h1>
-          <input
-            value={this.state.password}
-            onChange={this.setPassword}
-          />
-          <button onClick={this.login}>LOGIN</button>
-        </div>
+      <div>
+        <h1>VS Engineering Dashboard</h1>
+        <input
+          value={this.state.password}
+          onChange={this.setPassword}
+        />
+        <button onClick={this.login}>LOGIN</button>
       </div>
     );
   }
 }
 
 Login.propTypes = {
-  title: PropTypes.string.isRequired,
   actions: PropTypes.object.isRequired,
 };
 

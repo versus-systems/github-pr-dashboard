@@ -22,15 +22,6 @@ export function loggedInReducer(state = !!localStorage.getItem('token'), action)
   }
 }
 
-export function titleReducer(state = '', action) {
-  switch (action.type) {
-    case ActionTypes.SET_TITLE:
-      return action.title;
-    default:
-      return state;
-  }
-}
-
 export function teamReducer(state = [], action) {
   switch (action.type) {
     case ActionTypes.SET_TEAM:

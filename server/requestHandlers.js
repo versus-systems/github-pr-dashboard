@@ -26,7 +26,6 @@ exports.getPullRequests = function getPullRequests(req, res) {
           timeToClose: averageTime,
           mergedThisWeek: merged,
           repos: config.repos,
-          title: 'The 405',
           topCommenters: commenters,
         });
       });

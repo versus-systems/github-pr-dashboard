@@ -11,7 +11,6 @@ export const ActionTypes = {
   START_LOADING: 'START_LOADING',
   SET_ERROR: 'SET_ERROR',
   SET_REPOS: 'SET_REPOS',
-  SET_TITLE: 'SET_TITLE',
   SET_TEAM: 'SET_TEAM',
   SET_TEAM_MEMBER: 'SET_TEAM_MEMBER',
   SET_MERGED_THIS_WEEK: 'SET_MERGED_THIS_WEEK',
@@ -37,13 +36,6 @@ export function setTimeToClose(timeToClose) {
   return {
     type: ActionTypes.TIME_TO_CLOSE,
     timeToClose
-  };
-}
-
-export function setTitle(title) {
-  return {
-    type: ActionTypes.SET_TITLE,
-    title
   };
 }
 
@@ -121,7 +113,6 @@ export function loadPullRequests(showLoading = false) {
       dispatch(setError(''));
       dispatch(addPullRequests(response.data.pullRequests, sortOptions));
       dispatch(setRepos(response.data.repos));
-      dispatch(setTitle(response.data.title || 'Pull Requests'));
       dispatch(setTimeToClose(response.data.timeToClose));
       dispatch(setMergedThisWeek(response.data.mergedThisWeek));
       dispatch(setTopCommenters(response.data.topCommenters));

@@ -8,8 +8,6 @@ import {
 } from 'react-router-dom';
 
 import Dashboard from './components/Dashboard';
-import Team from './pages/Team';
-import TeamMember from './pages/TeamMember';
 import configureStore from './store';
 
 import '../css/main.css';
@@ -21,8 +19,6 @@ ReactDOM.render(
     <Router>
       <Switch>
         <Route exact path="/" component={Dashboard} />
-        <Route exact path="/team" component={Team} />
-        <Route exact path="/team/:login" component={TeamMember} />
       </Switch>
     </Router>
   </Provider>,
