@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const configManager = require('./configManager');
 const githubService = require('./githubService');
 const clubhouseService = require('./clubhouseService');
 const Deployment = require('./schemas/deploymentSchema');
@@ -17,18 +16,9 @@ exports.login = function login(req, res) {
 };
 
 exports.getPullRequests = function getPullRequests(req, res) {
-  const config = configManager.getConfig();
   githubService.loadPullRequests().then((prs) => {
-    githubService.getPastWeekData().then(({ merged, averageTime }) => {
-      githubService.loadTopCommenters().then((commenters) => {
-        res.status(200).json({
-          pullRequests: prs,
-          timeToClose: averageTime,
-          mergedThisWeek: merged,
-          repos: config.repos,
-          topCommenters: commenters,
-        });
-      });
+    res.status(200).json({
+      pullRequests: prs,
     });
   }).catch((error) => {
     res.status(500).json({

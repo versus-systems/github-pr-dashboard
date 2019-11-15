@@ -1,4 +1,11 @@
+const { repos } = require('./config');
 const time = require('./time');
+
+const repoFragments = () =>
+  repos.map(repo =>
+    `${repo.name}: repository(name: "${repo.slug}") {
+      ...pullRequests
+    }\n`);
 
 exports.closedPullRequests = `
   query {
@@ -33,12 +40,7 @@ exports.closedPullRequests = `
 exports.openPullRequests = `
   query {
     repositoryOwner(login: "versus-systems") {
-      Umbrella: repository(name: "versus_umbrella") {
-        ...pullRequests
-      }
-      SDK: repository(name: "sdk-unity") {
-        ...pullRequests
-      }
+      ${repoFragments()}
     }
   }
 
