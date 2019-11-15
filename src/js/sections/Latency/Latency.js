@@ -32,31 +32,35 @@ class Latency extends React.Component {
     return (
       <Card>
         <Row>
-          <Gauge
-            id="lead-gauge"
-            value={leadTime.days}
-            min={0}
-            max={20}
-            type="month"
-            description={value => (
-              <Description>
-                The average feature is in production value {value} after being requested.
-              </Description>
-            )}
-          />
+          <div style={{ flex: '0 0 50%' }}>
+            <Gauge
+              id="lead-gauge"
+              value={leadTime.days}
+              min={0}
+              max={20}
+              type="month"
+              description={value => (
+                <Description>
+                  The average feature is in production value {value} after being requested.
+                </Description>
+              )}
+            />
+          </div>
 
-          <Gauge
-            id="cycle-gauge"
-            value={cycleTime.days}
-            min={0}
-            max={10}
-            type="sprint"
-            description={value => (
-              <Description>
-                The average feature is in production value {value} after dev work begins.
-              </Description>
-            )}
-          />
+          <div style={{ flex: '0 0 50%' }}>
+            <Gauge
+              id="cycle-gauge"
+              value={cycleTime.days}
+              min={0}
+              max={10}
+              type="sprint"
+              description={value => (
+                <Description>
+                  The average feature is in production value {value} after dev work begins.
+                </Description>
+              )}
+            />
+          </div>
         </Row>
       </Card>
     );
