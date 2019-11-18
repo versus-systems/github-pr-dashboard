@@ -41,7 +41,7 @@ class Latency extends React.Component {
               type="month"
               description={value => (
                 <Description>
-                  The average feature is in production value {value} after being requested.
+                  The average feature is in production {value} after being requested.
                 </Description>
               )}
             />
@@ -56,7 +56,7 @@ class Latency extends React.Component {
               type="sprint"
               description={value => (
                 <Description>
-                  The average feature is in production value {value} after dev work begins.
+                  The average feature is in production {value} after dev work begins.
                 </Description>
               )}
             />
